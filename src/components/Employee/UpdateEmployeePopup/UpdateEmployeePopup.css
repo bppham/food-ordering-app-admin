@@ -1,4 +1,4 @@
-.add-employee-model-overplay {
+.update-employee-model-overplay {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,12 +11,12 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.add-employee-model-overplay h3 {
+.update-employee-model-overplay h3 {
   font-size: 25px;
   font-weight: bold;
 }
 
-.add-employee-model-overplay .model {
+.update-employee-model-overplay .model {
   background: #fff;
   padding: 20px;
   width: 1000px;
@@ -25,25 +25,25 @@
   animation: scaleIn 0.3s ease-in-out;
 }
 
-.add-employee-model-overplay .model .info-row {
+.update-employee-model-overplay .model .info-row {
   display: flex;
   margin-top: 20px;
 }
 
-.add-employee-model-overplay .info-row .left {
+.update-employee-model-overplay .info-row .left {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.add-employee-model-overplay .model .info-row .left img {
+.update-employee-model-overplay .model .info-row .left img {
   width: 200px;
   height: 200px;
   border-radius: 50%;
 }
 
-.add-employee-model-overplay .model .info-row .left button {
+.update-employee-model-overplay .model .info-row .left button {
   margin-top: 20px;
   background-color: #6699ff;
   color: white;
@@ -54,17 +54,17 @@
   width: 120px;
 }
 
-.add-employee-model-overplay .model .info-row .left button:hover {
+.update-employee-model-overplay .model .info-row .left button:hover {
   background-color: #5385e9;
 }
 
-.add-employee-model-overplay .model .info-row .right {
+.update-employee-model-overplay .model .info-row .right {
   flex: 2;
   display: flex;
   flex-direction: column;
 }
 
-.add-employee-model-overplay .model .info-row .right .row {
+.update-employee-model-overplay .model .info-row .right .row {
   display: flex;
   align-items: center;
   gap: 15px;
@@ -72,7 +72,7 @@
   margin-bottom: 10px;
 }
 
-.add-employee-model-overplay .info-row .right .item {
+.update-employee-model-overplay .info-row .right .item {
   flex: 1;
   font-size: 15px;
   display: flex;
@@ -81,13 +81,13 @@
   gap: 2px;
 }
 
-.add-employee-model-overplay .info-row .right .item label {
+.update-employee-model-overplay .info-row .right .item label {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-.add-employee-model-overplay .info-row .right .item input,
+.update-employee-model-overplay .info-row .right .item input,
 select {
   width: 100%;
   padding: 5px 10px;
@@ -96,14 +96,14 @@ select {
   font-size: 15px;
 }
 
-.add-employee-model-overplay .model-buttons {
+.update-employee-model-overplay .model-buttons {
   margin-top: 20px;
   display: flex;
   gap: 50px;
   justify-content: center;
 }
 
-.add-employee-model-overplay .model-buttons button {
+.update-employee-model-overplay .model-buttons button {
   color: white;
   width: 150px;
   font-size: 18px;
@@ -113,19 +113,19 @@ select {
   cursor: pointer;
 }
 
-.add-employee-model-overplay .model-buttons button:first-child {
+.update-employee-model-overplay .model-buttons button:first-child {
   background-color: #dc3545;
 }
 
-.add-employee-model-overplay .model-buttons button:first-child:hover {
+.update-employee-model-overplay .model-buttons button:first-child:hover {
   background-color: #e45160;
 }
 
-.add-employee-model-overplay .model-buttons button:last-child {
+.update-employee-model-overplay .model-buttons button:last-child {
   background-color: #198754;
 }
 
-.add-employee-model-overplay .model-buttons button:last-child:hover {
+.update-employee-model-overplay .model-buttons button:last-child:hover {
   background-color: #3ba774;
 }
 
@@ -167,7 +167,7 @@ select {
   height: 18px;
 }
 
-.role-container label{
+.role-container label {
   display: flex;
   gap: 10px;
 }

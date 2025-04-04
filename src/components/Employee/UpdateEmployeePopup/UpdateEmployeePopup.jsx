@@ -1,20 +1,28 @@
-import { useState } from "react";
-import "./AddEmployeePopup.css";
+import React, { useState } from "react";
+import "./UpdateEmployeePopup.css";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
-import { addEmployee, uploadAvatarImage } from "../../../api/employee";
+import { updateEmployee, uploadAvatarImage } from "../../../api/employee";
 
-const AddEmployeePopup = ({ showAddPopup, setShowAddPopup, onEmployeeAdd }) => {
-  const [employee, setEmployee] = useState({
-    name: "",
-    email: "",
-    phonenumber: "",
-    gender: "",
-    role: [],
-    password: "",
-    avatar: null,
+const page = ({
+  showUpdatePopup,
+  employee,
+  setShowUpdatePopup,
+  onEmployeeUpdated,
+}) => {
+  const [employeeInfo, setEmployeeInfo] = useState({
+    name: employee.name,
+    email: employee.email,
+    phonenumber: employee.phonenumber,
+    gender: employee.gender,
+    role: employee.role || [],
+    avatar: "",
   });
+  const [loading, setLoading] = useState(false);
+
+  const [image, setImage] = useState(null);
+  const [previewAvatar, setPreviewAvatar] = useState(employee.avatar.url);
 
   const roles = [
     { value: "ADMIN", label: "Admin" },
@@ -23,22 +31,19 @@ const AddEmployeePopup = ({ showAddPopup, setShowAddPopup, onEmployeeAdd }) => {
     { value: "EMPLOYEE", label: "Manage Employees" },
   ];
 
-  const handleRoleChange = (role) => {
-    setEmployee((prev) => {
-      const newRoles = prev.role.includes(role)
+  const handleRoleToggle = (role) => {
+    setEmployeeInfo((prev) => {
+      const updatedRoles = prev.role.includes(role)
         ? prev.role.filter((r) => r !== role)
-        : [...prev.role, role]; // Thêm hoặc xóa quyền
-      return { ...prev, role: newRoles };
+        : [...prev.role, role];
+      return { ...prev, role: updatedRoles };
     });
   };
-
-  const [previewAvatar, setPreviewAvatar] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setEmployee((prev) => ({ ...prev, avatar: file }));
+      setEmployeeInfo((prev) => ({ ...prev, avatar: file }));
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewAvatar(reader.result);
@@ -47,29 +52,32 @@ const AddEmployeePopup = ({ showAddPopup, setShowAddPopup, onEmployeeAdd }) => {
     }
   };
 
-  const handleSave = async (e) => {
+  const handelUpdate = async (e) => {
     e.preventDefault();
 
-    if (employee.name === "") {
+    if (employeeInfo.name === "") {
       toast.error("Name is required");
       return;
     }
 
-    if (employee.email === "") {
+    if (employeeInfo.email === "") {
       toast.error("Email is required");
       return;
     }
 
-    if (!/^\d+$/.test(employee.phonenumber) || employee.phonenumber < 10) {
+    if (
+      !/^\d+$/.test(employeeInfo.phonenumber) ||
+      employeeInfo.phonenumber < 10
+    ) {
       toast.error("Phone number invalid");
       return;
     }
-    if (employee.gender === "") {
+    if (employeeInfo.gender === "") {
       toast.error("Gender is required");
       return;
     }
 
-    if (employee.role === "") {
+    if (employeeInfo.role === "") {
       toast.error("Role is required");
       return;
     }
@@ -77,30 +85,33 @@ const AddEmployeePopup = ({ showAddPopup, setShowAddPopup, onEmployeeAdd }) => {
     try {
       let urlAvatar =
         "https://res.cloudinary.com/datnguyen240/image/upload/v1722168751/avatars/avatar_pnncdk.png";
-      if (employee.avatar) {
+      if (employeeInfo.avatar) {
         console.log("Call api upload img");
-        urlAvatar = await uploadAvatarImage(employee.avatar);
+        urlAvatar = await uploadAvatarImage(employeeInfo.avatar);
       }
       console.log(urlAvatar);
+      console.log(employee._id);
 
-      await addEmployee(employee, urlAvatar);
-      Swal.fire("Success!", "Employee has been added!", "success").then(() => {
-        setShowAddPopup(false);
-        if (onEmployeeAdd) {
-          onEmployeeAdd();
+      await updateEmployee(employee._id, employeeInfo, urlAvatar);
+      Swal.fire("Success!", "Employee has been updated!", "success").then(
+        () => {
+          setShowUpdatePopup(false);
+          if (onEmployeeUpdated) {
+            onEmployeeUpdated();
+          }
         }
-      });
+      );
     } catch (error) {
-      console.log("❌ Error add employee:", error);
-      toast.error(error.response?.data || "Failed Add Employee!");
+      console.log("❌ Error update employee:", error);
+      toast.error(error.response?.data || "Failed update Employee!");
     }
   };
 
   return (
-    showAddPopup && (
-      <div className="add-employee-model-overplay">
+    showUpdatePopup && (
+      <div className="update-employee-model-overplay">
         <div className="model">
-          <h3>Add an employee</h3>
+          <h3>Update an employee</h3>
           <div className="info-row">
             <div className="left">
               <img
@@ -115,13 +126,13 @@ const AddEmployeePopup = ({ showAddPopup, setShowAddPopup, onEmployeeAdd }) => {
                 accept="image/*"
                 onChange={handleAvatarChange}
                 id="avatarInput"
-                style={{ display: "none" }} // Ẩn input file
+                style={{ display: "none" }}
               />
               <button
                 type="button"
                 onClick={() => document.getElementById("avatarInput").click()}
               >
-                Choose Image
+                Choose image
               </button>
             </div>
             <div className="right">
@@ -131,9 +142,9 @@ const AddEmployeePopup = ({ showAddPopup, setShowAddPopup, onEmployeeAdd }) => {
                   <input
                     type="text"
                     placeholder="Input employee's name ..."
-                    value={employee.name}
+                    value={employeeInfo.name}
                     onChange={(e) =>
-                      setEmployee((prev) => ({
+                      setEmployeeInfo((prev) => ({
                         ...prev,
                         name: e.target.value,
                       }))
@@ -146,9 +157,9 @@ const AddEmployeePopup = ({ showAddPopup, setShowAddPopup, onEmployeeAdd }) => {
                   <input
                     type="text"
                     placeholder="Input employee's email ..."
-                    value={employee.email}
+                    value={employeeInfo.email}
                     onChange={(e) =>
-                      setEmployee((prev) => ({
+                      setEmployeeInfo((prev) => ({
                         ...prev,
                         email: e.target.value,
                       }))
@@ -160,16 +171,15 @@ const AddEmployeePopup = ({ showAddPopup, setShowAddPopup, onEmployeeAdd }) => {
 
               <div className="row">
                 <div className="item">
-                  <label>Phone number</label>
+                  <label>Phone number:</label>
                   <input
                     type="text"
                     placeholder="Input employee's phone number ..."
-                    value={employee.phonenumber}
+                    value={employeeInfo.phonenumber}
                     onChange={(e) =>
-                      setEmployee((prev) => ({
+                      setEmployeeInfo((prev) => ({
                         ...prev,
                         phonenumber: e.target.value,
-                        password: e.target.value,
                       }))
                     }
                     required
@@ -178,9 +188,9 @@ const AddEmployeePopup = ({ showAddPopup, setShowAddPopup, onEmployeeAdd }) => {
                 <div className="item">
                   <label>Gender:</label>
                   <select
-                    value={employee.gender}
+                    value={employeeInfo.gender}
                     onChange={(e) =>
-                      setEmployee((prev) => ({
+                      setEmployeeInfo((prev) => ({
                         ...prev,
                         gender: e.target.value,
                       }))
@@ -196,15 +206,15 @@ const AddEmployeePopup = ({ showAddPopup, setShowAddPopup, onEmployeeAdd }) => {
 
               <div className="row">
                 <div className="item">
-                  <label>Access control:</label>
+                  <label>Phân quyền:</label>
                   <div className="checkbox-roles">
                     {roles.map((role) => (
                       <div key={role.value} className="role-container">
                         <label>
                           <input
                             type="checkbox"
-                            checked={employee.role.includes(role.value)}
-                            onChange={() => handleRoleChange(role.value)}
+                            checked={employeeInfo.role.includes(role.value)}
+                            onChange={() => handleRoleToggle(role.value)}
                           />
                           {role.label}
                         </label>
@@ -217,9 +227,9 @@ const AddEmployeePopup = ({ showAddPopup, setShowAddPopup, onEmployeeAdd }) => {
           </div>
 
           <div className="model-buttons">
-            <button onClick={() => setShowAddPopup(false)}>Cancel</button>
-            <button onClick={handleSave} disabled={loading}>
-              {loading ? "Saving..." : "Save"}
+            <button onClick={() => setShowUpdatePopup(false)}>Cancel</button>
+            <button disabled={loading} onClick={handelUpdate}>
+              {loading ? "Updating..." : "Update"}
             </button>
           </div>
         </div>
@@ -228,4 +238,4 @@ const AddEmployeePopup = ({ showAddPopup, setShowAddPopup, onEmployeeAdd }) => {
   );
 };
 
-export default AddEmployeePopup;
+export default page;

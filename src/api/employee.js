@@ -3,21 +3,16 @@ import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URI;
 
 const getAuthHeaders = () => {
-  const token = localStorage.getItem("token"); // Lấy token từ localStorage
+  const token = localStorage.getItem("token");
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
 export const addEmployee = async (employeeData, imgURL) => {
   try {
-    console.log("📤 Gửi dữ liệu đăng ký:", {
-      ...employeeData,
-      avatar: { url: imgURL },
-    });
-
     const response = await axios.post(
       `${BASE_URL}/api/v1/employee`,
       { ...employeeData, avatar: { url: imgURL } },
-      { 
+      {
         headers: {
           "Content-Type": "application/json",
           ...getAuthHeaders(),
@@ -25,10 +20,9 @@ export const addEmployee = async (employeeData, imgURL) => {
       }
     );
 
-    console.log("✅ Đăng ký thành công:", response.data);
     return response.data;
   } catch (error) {
-    console.log("❌ Lỗi đăng ký nhân viên:", error.response?.data || error);
+    console.log("Error add employee:", error.response?.data || error);
     throw error.response?.data?.message || "Có lỗi xảy ra!";
   }
 };
@@ -49,7 +43,7 @@ export const uploadAvatarImage = async (file) => {
     console.log(response.data[0].url);
     return response.data[0].url;
   } catch (error) {
-    console.error("Lỗi khi upload ảnh:", error);
+    console.error("Error upload image (avatar) ", error);
     throw error;
   }
 };
@@ -62,10 +56,10 @@ export const getAllEmployees = async () => {
     return response.data;
   } catch (error) {
     console.error(
-      "Lỗi khi lấy danh sách nhân viên:",
+      "Error get all employees:",
       error.response?.data?.message || error.message
     );
-    throw error; // Đảm bảo lỗi được ném ra để xử lý ở React
+    throw error;
   }
 };
 
@@ -97,37 +91,39 @@ export const approveEmployee = async (id) => {
   }
 };
 
-// export const updateFoodType = async (id, name, imageUrl) => {
-//   try {
-//     const response = await axios.put(
-//       `${BASE_URL}/api/v1/foodType/${id}`,
-//       {
-//         name,
-//         image: imageUrl ? { url: imageUrl } : undefined,
-//       },
-//       { headers: getAuthHeaders() }
-//     );
+export const updateEmployee = async (id, employeeData, imgURL) => {
+  try {
+    const response = await axios.put(
+      `${BASE_URL}/api/v1/employee/${id}`,
+      { ...employeeData, avatar: { url: imgURL } },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          ...getAuthHeaders(),
+        },
+      }
+    );
 
-//     return response.data;
-//   } catch (error) {
-//     console.error("Lỗi khi cập nhật FoodType:", error);
-//     throw error;
-//   }
-// };
+    return response.data;
+  } catch (error) {
+    console.log("Error upload employee:", error.response?.data || error);
+    throw error.response?.data?.message || "Error";
+  }
+};
 
-// export const deleteEmployee = async (id) => {
-//   if (!id) {
-//     throw new Error("Employee ID is missing");
-//   }
+export const deleteEmployee = async (id) => {
+  if (!id) {
+    throw new Error("Employee ID is missing");
+  }
 
-//   try {
-//     const response = await axios.delete(`${BASE_URL}/api/v1/employee/${id}`, {
-//       headers: getAuthHeaders(),
-//     });
+  try {
+    const response = await axios.delete(`${BASE_URL}/api/v1/employee/${id}`, {
+      headers: getAuthHeaders(),
+    });
 
-//     return response.data;
-//   } catch (error) {
-//     console.error("Lỗi khi xóa nhân viên:", error);
-//     throw error;
-//   }
-// };
+    return response.data;
+  } catch (error) {
+    console.error("Error delete employee:", error);
+    throw error;
+  }
+};

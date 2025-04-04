@@ -9,10 +9,12 @@ import {
   getAllEmployees,
   blockEmployee,
   approveEmployee,
+  deleteEmployee,
 } from "../../api/employee";
 
 import AddEmployeePopup from "../../components/Employee/AddEmployeePopup/AddEmployeePopup";
-import UpdateFoodTypePopup from "../../components/FoodType/UpdateFoodTypePopup/UpdateFoodTypePopup";
+import UpdateEmployeePopup from "../../components/Employee/UpdateEmployeePopup/UpdateEmployeePopup";
+import DetailEmployeePopup from "../../components/Employee/DetailEmployeePopup/DetailEmployeePopup";
 
 const page = () => {
   const [employees, setEmployees] = useState([]);
@@ -83,9 +85,11 @@ const page = () => {
     setShowUpdatePopup(true);
   };
 
-  const closeUpdatePopup = () => {
-    setShowUpdatePopup(false);
-    setSeletedEmployee(null);
+  // Handel Detail
+  const [showDetailPopup, setShowDetailPopup] = useState(false);
+  const openDetailPopup = (employee) => {
+    setSeletedEmployee(employee);
+    setShowDetailPopup(true);
   };
 
   // BLOCK SHIPPER
@@ -110,38 +114,37 @@ const page = () => {
   };
 
   // DELETE
-  // const handleDelete = async (id) => {
-  //   if (!id) {
-  //     return toast.error("Employee ID is missing!");
-  //   }
+  const handleDelete = async (id) => {
+    if (!id) {
+      return toast.error("Employee ID is missing!");
+    }
 
-  //   const confirmDelete = await Swal.fire({
-  //     title: "Are you sure?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#d33",
-  //     cancelButtonColor: "#3085d6",
-  //     confirmButtonText: "Yes, delete it!",
-  //   });
+    const confirmDelete = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
 
-  //   if (!confirmDelete.isConfirmed) return;
+    if (!confirmDelete.isConfirmed) return;
 
-  //   try {
-  //     await deleteFoodType(id);
+    try {
+      await deleteEmployee(id);
 
-  //     Swal.fire({
-  //       icon: "success",
-  //       title: "Employee deleted successfully!",
-  //     });
+      Swal.fire({
+        icon: "success",
+        title: "Employee deleted successfully!",
+      });
 
-  //     setEmployees((prev) => prev.filter((item) => item._id !== id)); // Cập nhật UI ngay lập tức
-  //   } catch (error) {
-  //     console.error("Lỗi khi xóa employee:", error);
-  //     toast.error("Failed to delete employee");
-  //   } finally {
-  //   }
-  // };
+      setEmployees((prev) => prev.filter((item) => item._id !== id));
+    } catch (error) {
+      toast.error("Failed to delete employee");
+    } finally {
+    }
+  };
 
   // Pagination logic
   const totalPages = Math.ceil(filteredEmployees.length / itemsPerPage);
@@ -220,8 +223,14 @@ const page = () => {
                     </td>
                     <td>
                       <div className="action">
-                        <img src="/assets/admin-icons/info.png" alt="" />
-                        <img src="/assets/admin-icons/role.png" alt="" />
+                        <img
+                          src="/assets/admin-icons/info.png"
+                          onClick={() => openDetailPopup(employee)}
+                        />
+                        <img
+                          src="/assets/admin-icons/role.png"
+                          onClick={() => openUpdatePopup(employee)}
+                        />
                         <img
                           src={
                             employee.status === "APPROVED"
@@ -238,7 +247,7 @@ const page = () => {
                           }
                           style={{ cursor: "pointer" }}
                         />
-                        <img src="/assets/admin-icons/delete.png"/>
+                        <img src="/assets/admin-icons/delete.png" onClick={() => handleDelete(employee._id)}/>
                       </div>
                     </td>
                   </tr>
@@ -282,13 +291,22 @@ const page = () => {
         />
       )}
 
-      {/* {showUpdatePopup && (
-        <UpdateFoodTypePopup
-          food={seletedEmployee}
-          onClose={() => setShowUpdatePopup(false)}
-          onFoodTypeUpdated={fetchEmployees}
+      {showUpdatePopup && (
+        <UpdateEmployeePopup
+          showUpdatePopup={showUpdatePopup}
+          employee={seletedEmployee}
+          setShowUpdatePopup={setShowUpdatePopup}
+          onEmployeeUpdated={fetchEmployees}
         />
-      )} */}
+      )}
+
+      {showDetailPopup && (
+        <DetailEmployeePopup
+          showDetailPopup={showDetailPopup}
+          employee={seletedEmployee}
+          setShowDetailPopup={setShowDetailPopup}
+        />
+      )}
     </div>
   );
 };
