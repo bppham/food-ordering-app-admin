@@ -127,3 +127,18 @@ export const deleteEmployee = async (id) => {
     throw error;
   }
 };
+
+export const getEmployee = async (employeeId) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/api/v1/employee/${employeeId}`,
+      {
+        headers: getAuthHeaders(),
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error get data employee:", error);
+    throw error;
+  }
+};
