@@ -24,10 +24,14 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    align-items: center;
+    justify-content: center;
 }
 
 .shipper-request .item .item-left img{
-    width: 200px;
+    width: 180px;
+    height: 180px;
+    border-radius: 10%;
     object-fit: cover;
 }
 
@@ -44,10 +48,11 @@
     gap: 10px;
 }
 
-.shipper-request .item .item-right .shipper-name{
-    font-size: 25px;
+.shipper-request .item .item-right .shipper-id{
+    font-size: 20px;
     font-weight: 600;
-    color: var(--main-color);
+    font-style: italic;
+    color: #7a7474;
     margin-bottom: 10px;
 }
 
@@ -55,6 +60,15 @@
     display: flex;
     gap: 30px;
     font-size: 18px;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.shipper-request .item .item-right .info-container .item-row{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .shipper-request .item .item-right .info-item{
@@ -80,30 +94,12 @@
     cursor: pointer;
     font-size: 20px;
     padding: 2px 10px;
-}
-
-.shipper-request .action button:first-child{
     background-color: #5cb85c;
+    cursor: pointer;
 }
 
-.shipper-request .action button:first-child:hover{
-    background-color: #51d151;
-}
-
-.shipper-request .action button:nth-child(2){
-    background-color: #dc3545;
-}
-
-.shipper-request .action button:nth-child(2):hover{
-    background-color: #ca4351;
-}
-
-.shipper-request .action button:last-child{
-    background-color: var(--main-color);
-}
-
-.shipper-request .action button:last-child:hover{
-    background-color: rgb(241, 125, 29);
+.shipper-request .action button:hover{
+    background-color: #41b641;
 }
 
 .shipper-request .pagination{

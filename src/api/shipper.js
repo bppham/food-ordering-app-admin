@@ -31,13 +31,40 @@ export const approveShipper = async (shipperId) => {
   }
 };
 
-export const getAllShipper = async () => {
+export const blockShipper = async (shipperId) => {
   try {
-    const resposne = await axios.get(`${BASE_URL}/api/v1/shipper`);
+    const response = await axios.patch(
+      `${BASE_URL}/api/v1/shipper/${shipperId}/block`,
+      {},
+      { headers: getAuthHeaders() }
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error can not block shipper: ", error);
+    throw error;
+  }
+};
+
+export const getCurrentShippers = async () => {
+  try {
+    const resposne = await axios.get(`${BASE_URL}/api/v1/shipper/current`);
     console.log(resposne);
     return resposne.data;
   } catch (error) {
     console.log("Error can not approve shipper: ", error);
+    throw error;
+  }
+};
+
+export const deleteShipper = async (id) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/api/v1/shipper/${id}`, {
+      headers: getAuthHeaders(),
+    });
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.log("Error can not delete shipper: ", error);
     throw error;
   }
 };

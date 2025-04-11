@@ -162,7 +162,7 @@ td {
   border-radius: 5px;
 }
 
-.employee .action  {
+.employee .action {
   display: flex;
   align-items: center;
 }
@@ -176,7 +176,6 @@ td {
 .employee .action img:hover {
   padding: 4px;
 }
-
 
 .employee .status-approved {
   color: green;

@@ -55,21 +55,33 @@ const shipper_request = () => {
               />
             </div>
             <div className="item-right">
-              <div className="shipper-name">{shipper.name}</div>
+              <div className="shipper-id">{shipper._id}</div>
               <div className="info-container">
-                <div className="info-item">
-                  <label>Email:</label>
-                  <p>{shipper.email}</p>
+                <div className="item-row">
+                  <div className="info-item">
+                    <label>Name:</label>
+                    <p>{shipper.name}</p>
+                  </div>
+                  <div className="info-item">
+                    <label>Email:</label>
+                    <p>{shipper.email}</p>
+                  </div>
                 </div>
-                <div className="info-item">
-                  <label>Phone number:</label>
-                  <p>{shipper.phonenumber}</p>
+                <div className="item-row">
+                  <div className="info-item">
+                    <label>Phone number:</label>
+                    <p>{shipper.phonenumber}</p>
+                  </div>
+                  <div className="info-item">
+                    <label>Gender:</label>
+                    <p>{shipper.gender}</p>
+                  </div>
                 </div>
               </div>
               <div className="action">
-                <button onClick={() => handleApprove(shipper._id)}>Approve</button>
-                <button>Decline</button>
-                <button>More info</button>
+                <button onClick={() => handleApprove(shipper._id)}>
+                  Approve
+                </button>
               </div>
             </div>
           </div>

@@ -1,74 +1,113 @@
-.store-request{
-    padding: 20px;
+.store-request {
+  padding: 20px;
 }
 
-.store-request .title{
-    font-size: 35px;
-    font-weight: 800;
-    margin-bottom: 20px;
+.store-request .title {
+  font-size: 35px;
+  font-weight: 800;
+  margin-bottom: 20px;
 }
 
-.store-request .item{
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    display: flex;
-    padding: 15px;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    margin-bottom: 20px;
+.store-request .item {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  display: flex;
+  padding: 15px;
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  margin-bottom: 20px;
 }
 
-.store-request .item .item-left{
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.store-request .item .item-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.store-request .item .item-left img{
-    width: 200px;
-    object-fit: cover;
+.store-request .item .item-left img {
+  width: 200px;
+  object-fit: cover;
 }
 
-.store-request .item .item-left .store-owner{
-    display: flex;
-    gap: 5px;
-    align-items: center;
+.store-request .item .item-left .store-owner {
+  display: flex;
+  gap: 5px;
+  align-items: center;
 }
 
-.store-request .item .item-right{
-    flex: 3;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.store-request .item .item-right {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.store-request .item .item-right .store-name{
-    font-size: 25px;
-    font-weight: 600;
-    color: var(--main-color);
-    margin-bottom: 10px;
+.store-request .item .item-right .store-name {
+  font-size: 25px;
+  font-weight: 600;
+  color: var(--main-color);
+  margin-bottom: 10px;
 }
 
-.store-request .item .item-right .address{
-    display: flex;
-    gap: 5px;
-    align-items: center;
-    font-size: 18px;
-    margin-bottom: 10px;
+.store-request .item .item-right .address {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
-.store-request .item .item-right button{
-    background-color: var(--main-color);
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    width: 150px;
-    border-radius: 10px;
+.store-request .item .item-right .action {
+  display: flex;
+  gap: 30px;
 }
 
-.store-request .item .item-right button:hover{
-    background-color: rgb(240, 87, 17);
-    cursor: pointer;
+.store-request .item .item-right .action button {
+  background-color: var(--main-color);
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  width: 120px;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.store-request .item .item-right .action button:first-child {
+  background-color: #198754;
+}
+
+.store-request .item .item-right .action button:first-child:hover {
+  background-color: #41ad7d;
+}
+
+.store-request .item .item-right .action button:last-child {
+  background-color: #0dcaf0;
+}
+
+.store-request .item .item-right .action button:last-child:hover {
+  background-color: #0ba2c0;
+}
+
+.store-request .pagination {
+  margin: 50px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+}
+
+.store-request .pagination button {
+  background-color: #ffffff;
+  width: 80px;
+  padding: 5px 10px;
+  color: red;
+  border: 1px solid rgb(163, 161, 161);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.store-request .pagination button:hover {
+  background-color: rgb(248, 248, 248);
 }
