@@ -17,7 +17,6 @@ export const login = async (email, password) => {
     }
 
     return data;
-    g;
   } catch (err) {
     throw err;
   }
@@ -53,5 +52,43 @@ export const resetPassword = async (newPassword, id) => {
     return response.data;
   } catch (error) {
     throw error.response?.data?.message;
+  }
+};
+
+// handle forget password
+export const forgetPassword = async (email) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/v1/auth/forgot-password/employee`,
+      { email }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error.response?.data?.message || "Error!");
+  }
+};
+
+export const checkOTP = async (email, otp) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/api/v1/auth/check-otp/employee`,
+      { email, otp }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Error!");
+  }
+};
+
+export const resetPasswordWithEmail = async (email, password) => {
+  try {
+    const response = await axios.put(
+      `${BASE_URL}/api/v1/auth/reset-password/employee`,
+      { email, password }
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Error!");
   }
 };

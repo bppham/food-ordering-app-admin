@@ -95,7 +95,7 @@ const Page = () => {
             </div>
 
             <div className="forgot-password">
-              <a href="/admin/auth/forgot-password">Quên mật khẩu?</a>
+              <a href="/auth/forgot-password">Quên mật khẩu?</a>
             </div>
 
             <button type="submit">Đăng nhập</button>
