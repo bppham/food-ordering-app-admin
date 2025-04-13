@@ -1,7 +1,7 @@
 import React from "react";
-import "./DetailShipper.css";
+import "./DetailShipperPopup.css";
 
-const DetailShipper = ({ shipper, onClose }) => {
+const DetailShipper = ({ showDetailPopup, shipper, setShowDetailPopup }) => {
   if (!shipper) return null;
 
   return (
@@ -43,9 +43,19 @@ const DetailShipper = ({ shipper, onClose }) => {
                 <p>{shipper.status}</p>
               </div>
             </div>
+            <div className="row">
+              <div className="item">
+                <label>Vehicle name: </label>
+                <p>{shipper.vehicle.name}</p>
+              </div>
+              <div className="item">
+                <label>Vehicle number: </label>
+                <p>{shipper.vehicle.number}</p>
+              </div>
+            </div>
           </div>
         </div>
-        <button onClick={onClose}>Close</button>
+        <button onClick={() => setShowDetailPopup(false)}>Close</button>
       </div>
     </div>
   );

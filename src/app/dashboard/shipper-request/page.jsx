@@ -77,6 +77,16 @@ const shipper_request = () => {
                     <p>{shipper.gender}</p>
                   </div>
                 </div>
+                <div className="item-row">
+                  <div className="info-item">
+                    <label>Vehicle name:</label>
+                    <p>{shipper.vehicle.name}</p>
+                  </div>
+                  <div className="info-item">
+                    <label>Vehicle number:</label>
+                    <p>{shipper.vehicle.number}</p>
+                  </div>
+                </div>
               </div>
               <div className="action">
                 <button onClick={() => handleApprove(shipper._id)}>

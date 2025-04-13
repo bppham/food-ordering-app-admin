@@ -11,6 +11,8 @@ import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import DetailShipperPopup from "../../../components/Shipper/DetailShipperPopup/DetailShipperPopup";
+
 const page = () => {
   const [shippers, setShippers] = useState([]);
   const [filteredShippers, setFilteredShippers] = useState([]);
@@ -108,7 +110,7 @@ const page = () => {
       });
 
       setShippers((prev) => prev.filter((item) => item._id !== id));
-    } catch (error) { 
+    } catch (error) {
       console.log(error);
       if (
         error.response &&
@@ -125,6 +127,15 @@ const page = () => {
         toast.error("Failed to delete shipper");
       }
     }
+  };
+
+  // Detail
+  const [showDetailPopup, setDetailPopup] = useState(false);
+  const [selectedShipper, setSeletedShipper] = useState(null);
+
+  const openDetailPopup = (shipper) => {
+    setSeletedShipper(shipper);
+    setDetailPopup(true);
   };
 
   // Pagination logic
@@ -198,6 +209,10 @@ const page = () => {
                 <td>
                   <div className="action">
                     <img
+                      src="/assets/admin-icons/info.png"
+                      onClick={() => openDetailPopup(shipper)}
+                    />
+                    <img
                       src={
                         shipper.status === "APPROVED"
                           ? "/assets/admin-icons/block.png"
@@ -244,6 +259,13 @@ const page = () => {
           Next
         </button>
       </div>
+      {showDetailPopup && (
+        <DetailShipperPopup
+          showDetailPopup={showDetailPopup}
+          shipper={selectedShipper}
+          setShowDetailPopup={setDetailPopup}
+        />
+      )}
     </div>
   );
 };

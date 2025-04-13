@@ -35,7 +35,7 @@
 .popup-content button {
   margin-top: 10px;
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #dc3545;
   color: white;
   border: none;
   cursor: pointer;
@@ -43,7 +43,7 @@
 }
 
 .popup-content button:hover {
-  background-color: #0056b3;
+  background-color: #e2505f;
 }
 
 .popup-overlay .content-container{

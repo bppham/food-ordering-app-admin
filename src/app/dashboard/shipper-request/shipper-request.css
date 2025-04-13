@@ -60,20 +60,22 @@
     display: flex;
     gap: 30px;
     font-size: 18px;
-    flex-direction: row;
+    flex-direction: column;
     gap: 20px;
+    justify-content: space-between;
 }
 
 .shipper-request .item .item-right .info-container .item-row{
     flex: 1;
     display: flex;
-    flex-direction: column;
     gap: 10px;
+    justify-content: space-between;
 }
 
 .shipper-request .item .item-right .info-item{
     display: flex;
     gap: 10px;
+    flex: 1;
 }
 
 .shipper-request .item .item-right .info-item label{

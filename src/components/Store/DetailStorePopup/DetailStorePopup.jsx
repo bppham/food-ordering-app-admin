@@ -1,24 +1,7 @@
 import React, { useState } from "react";
 import "./DetailStorePopup.css";
-import { toast } from "react-toastify";
-import Swal from "sweetalert2";
 
 const page = ({ showDetailPopup, store, setShowDetailPopup }) => {
-  const [loading, setLoading] = useState(false);
-
-  const [previewAvatar, setPreviewAvatar] = useState(store.avatar.url);
-
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewAvatar(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   return (
     showDetailPopup && (
       <div className="detail-store-model-overplay">
