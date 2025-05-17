@@ -12,7 +12,7 @@ const page = () => {
   const handleSendOTP = async () => {
     try {
       const response = await forgetPassword(email);
-      toast.success("Thành công");
+      toast.success("Success");
 
       sessionStorage.setItem("email", email)
       router.push("/auth/verify-otp");

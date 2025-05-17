@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import Link from "next/link";
+import Image from "next/image";
 
 import { getEmployee } from "../../api/employee";
 
@@ -39,9 +40,17 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="navbar-container">
-        <div className="navbar-left">
-          <span className="logo">ADMIN</span>
-        </div>
+        <Link href="/home/" className="link">
+          <div className="navbar-left">
+            <Image
+              src="/assets/logo.png"
+              width={45}
+              height={45}
+              alt="Home Icon"
+            />
+            <span className="logo">Admin</span>
+          </div>
+        </Link>
         <div className="navbar-right">
           <img
             src={

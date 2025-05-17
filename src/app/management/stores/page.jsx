@@ -4,6 +4,8 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { getAllStores, approveStore, blockStore } from "../../../api/store";
 import DetailStorePopup from "../../../components/Store/DetailStorePopup/DetailStorePopup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const page = () => {
   const [stores, setStores] = useState([]);
@@ -73,7 +75,6 @@ const page = () => {
         error.response?.data?.message || error.message
       );
       toast.error(error);
-      setError(error.response?.data?.message || "Error");
     }
   };
 
@@ -95,6 +96,7 @@ const page = () => {
   );
   return (
     <div className="store-list">
+      <ToastContainer position="top-right" autoClose={3000} />
       <h1>Stores</h1>
       <div className="store-list-header">
         <div className="title">
@@ -107,8 +109,8 @@ const page = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
             <select
-            value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value)}
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
             >
               <option value="">Sort by</option>
               <option value="id-asc">By Id: Ascending</option>

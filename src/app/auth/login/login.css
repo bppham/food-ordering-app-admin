@@ -83,9 +83,10 @@ button {
   background: #007bff;
   border: none;
   color: white;
-  font-size: 16px;
+  font-size: 18px;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
 }
 
 button:hover {

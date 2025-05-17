@@ -13,8 +13,12 @@ import { verifyOldPassword } from "../../api/auth";
 const page = () => {
   const [employee, setEmployee] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const user = JSON.parse(localStorage.getItem("user"));
-  const employeeId = user?.id;
+  const [employeeId, setEmployeeId] = useState(null);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    setEmployeeId(user?.id);
+  }, []);
 
   const [oldPassword, setOldPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -27,8 +31,10 @@ const page = () => {
   const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
-    fetchInfo();
-  }, []);
+    if (employeeId) {
+      fetchInfo();
+    }
+  }, [employeeId]);
 
   const fetchInfo = async () => {
     try {
@@ -135,12 +141,6 @@ const page = () => {
               onChange={(e) => setOldPassword(e.target.value)}
               required
             />
-            <span
-              className="toggle-password"
-              onClick={togglePasswordVisibility}
-            >
-              {passwordVisible ? "👁️" : "👁️‍🗨️"}
-            </span>
           </div>
 
           <div className="action">

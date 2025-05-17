@@ -11,7 +11,7 @@ const Sidebar = () => {
         <div className="sidebar-menu">
           <div className="sidebar-title">Dashboard</div>
           <ul className="sidebar-list">
-            <Link href="/" className="link">
+            <Link href="/home" className="link">
               <li className="sidebar-list-item">
                 <div className=" relative w-[30px] h-[30px] pt-[30px]">
                   <Image

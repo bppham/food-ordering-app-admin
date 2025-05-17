@@ -27,7 +27,7 @@ export const createFoodType = async (name, imageUrl) => {
 
 export const getFoodTypes = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/api/v1/foodType`);
+    const response = await axios.get(`${BASE_URL}/api/v1/foodType/`);
     return response.data;
   } catch (error) {
     console.error("Lỗi khi lấy danh sách FoodType:", error);

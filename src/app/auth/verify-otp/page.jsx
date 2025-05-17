@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 const Page = () => {
   const router = useRouter();
   const inputsRef = useRef([]);
-  const [timeLeft, setTimeLeft] = useState(120); // 120 giây (2 phút)
+  const [timeLeft, setTimeLeft] = useState(120);
   const [expired, setExpired] = useState(false);
 
   const [email, setEmail] = useState("");
@@ -76,13 +76,13 @@ const Page = () => {
   // Gửi OTP lên backend để xác thực
   const handleVerifyOTP = async () => {
     if (expired) {
-      toast.error("Mã OTP đã hết hạn. Vui lòng yêu cầu lại.");
+      toast.error("OTP expired, please click resend OTP.");
       return;
     }
 
     const enteredOTP = otp.join(""); // Ghép 6 số thành một chuỗi
     if (enteredOTP.length !== 6) {
-      toast.error("Vui lòng nhập đầy đủ 6 số OTP.");
+      toast.error("Please fill all the verify codes.");
       return;
     }
 
@@ -90,13 +90,13 @@ const Page = () => {
       setLoading(true);
       const response = await checkOTP(email, enteredOTP); // Gọi API
       toast.success(
-        "Xác thực thành công! Chuyển đến trang đặt lại mật khẩu..."
+        "Verify successfully, processing to reset password page"
       );
       setTimeout(() => {
         router.push("/auth/reset-password"); // Chuyển hướng đến trang đặt lại mật khẩu
       }, 1500);
     } catch (error) {
-      toast.error(error.message || "Mã OTP không đúng hoặc đã hết hạn.");
+      toast.error(error.message || "The OTP is incorrected or expired");
     } finally {
       setLoading(false);
     }
@@ -105,7 +105,7 @@ const Page = () => {
   const handleSendOTP = async () => {
     try {
       const response = await forgetPassword(email);
-      toast.success("Gửi lại mã thành công!");
+      toast.success("Resend the code successfully!");
 
       // Reset thời gian đếm ngược và trạng thái hết hạn
       setTimeLeft(120);
@@ -114,7 +114,7 @@ const Page = () => {
       inputsRef.current[0]?.focus(); // Đưa con trỏ về ô đầu tiên
     } catch (error) {
       console.log(error);
-      toast.error(error.message || "Gửi lại mã thất bại!");
+      toast.error(error.message || "Resend the code failed!");
     }
   };
 

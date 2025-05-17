@@ -1,6 +1,6 @@
 .navbar {
   width: 100%;
-  height: 50px;
+  height: 60px;
   background-color: white;
   position: sticky;
   top: 0;
@@ -15,10 +15,13 @@
   justify-content: space-between;
 }
 
-.navbar-left .logo {
+.navbar-left {
   font-weight: bold;
-  font-size: 30px;
-  color: var(--main-color);
+  font-size: 25px;
+  color: rgb(3, 16, 136);
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .navbar-right {
