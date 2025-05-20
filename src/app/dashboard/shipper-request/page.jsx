@@ -50,7 +50,7 @@ const shipper_request = () => {
           <div className="item" key={shipper._id}>
             <div className="item-left">
               <img
-                src={shipper.avatar?.url || "default-avatar.png"}
+                src={shipper.avatar?.url || "https://res.cloudinary.com/datnguyen240/image/upload/v1722168751/avatars/avatar_pnncdk.png"}
                 alt="Shipper Avatar"
               />
             </div>

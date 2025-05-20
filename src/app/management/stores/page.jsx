@@ -191,7 +191,7 @@ const page = () => {
         <button
           onClick={() =>
             setCurrentPage((prev) =>
-              Math.min(prev + 1, Math.ceil(authors.length / itemsPerPage))
+              Math.min(prev + 1, Math.ceil(stores.length / itemsPerPage))
             )
           }
           disabled={currentPage === Math.ceil(stores.length / itemsPerPage)}

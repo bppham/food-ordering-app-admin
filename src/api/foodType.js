@@ -10,12 +10,17 @@ const getAuthHeaders = () => {
 export const createFoodType = async (name, imageUrl) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/api/v1/foodType`,
+      `${BASE_URL}/api/v1/foodType/`,
       {
         name,
         image: { url: imageUrl },
       },
-      { headers: getAuthHeaders() }
+      {
+        headers: {
+          "Content-Type": "application/json",
+          ...getAuthHeaders(),
+        },
+      }
     );
 
     return response.data;

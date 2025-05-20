@@ -10,7 +10,7 @@ const getAuthHeaders = () => {
 export const addEmployee = async (employeeData, imgURL) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/api/v1/employee`,
+      `${BASE_URL}/api/v1/employee/`,
       { ...employeeData, avatar: { url: imgURL } },
       {
         headers: {
@@ -50,7 +50,7 @@ export const uploadAvatarImage = async (file) => {
 
 export const getAllEmployees = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/api/v1/employee`, {
+    const response = await axios.get(`${BASE_URL}/api/v1/employee/`, {
       headers: getAuthHeaders(),
     });
     return response.data;

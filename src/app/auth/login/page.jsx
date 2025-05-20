@@ -32,7 +32,7 @@ const Page = () => {
         closeButton: false,
       });
       setTimeout(() => {
-        router.push("/");
+        router.push("/home");
       }, 2000);
     } catch (err) {
       console.log(err);

@@ -9,7 +9,7 @@ import { createFoodType } from "../../../api/foodType";
 const AddFoodTypePopup = ({
   showAddPopup,
   setShowAddPopup,
-  onFoodTypeAdded
+  onFoodTypeAdded,
 }) => {
   const [foodType, setFoodType] = useState({
     name: "",
@@ -42,8 +42,13 @@ const AddFoodTypePopup = ({
 
     try {
       // 1️⃣ Upload ảnh trước
-      const imageUrl = await uploadImage(foodType.image);
-
+      let imageUrl =
+        "https://res.cloudinary.com/datnguyen240/image/upload/v1722168751/avatars/avatar_pnncdk.png";
+      if (foodType.image) {
+        console.log("Call api upload img");
+        imageUrl = await uploadImage(foodType.image);
+        console.log(imageUrl);
+      }
       // 2️⃣ Sau khi upload xong, tạo food type
       await createFoodType(foodType.name, imageUrl);
       if (onFoodTypeAdded) {
