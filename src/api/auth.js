@@ -1,24 +1,20 @@
 import axios from "axios";
-
+import publicApi from "./instances/publicApi";
 const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URI;
 
 export const login = async (email, password) => {
   try {
-    const res = await fetch(`${BASE_URL}/api/v1/auth/login/admin`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+    const res = await publicApi.post("/auth/admin/login", {
+      email,
+      password,
     });
 
-    const data = await res.json();
-
-    if (!res.ok) {
-      throw new Error(data.message || "Đăng nhập thất bại!");
-    }
-
-    return data;
+    return res.data;
   } catch (err) {
-    throw err;
+    throw {
+      status: err.response?.status,
+      message: err.response?.data?.message || "Đăng nhập thất bại!",
+    };
   }
 };
 

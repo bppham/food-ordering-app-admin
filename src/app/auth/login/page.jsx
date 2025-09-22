@@ -7,6 +7,7 @@ import Lottie from "lottie-react";
 import animLogin from "../../../../public/assets/anim/business-analysis.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import ClipLoader from "react-spinners/ClipLoader";
 
 import Swal from "sweetalert2";
 
@@ -15,42 +16,54 @@ const Page = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
+    setIsLoading(true);
 
     try {
-      const data = await login(email, password);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ id: data._id, role: data.role })
-      );
+      const res = await login(email, password);
 
-      toast.success("Success Login !", {
+      localStorage.setItem("token", res.data.accessToken);
+      localStorage.setItem("user", JSON.stringify(res.data.admin));
+
+      toast.success("Đăng nhập thành công!", {
         position: "top-right",
         closeButton: false,
       });
-      setTimeout(() => {
-        router.push("/home");
-      }, 2000);
+
+      setTimeout(() => router.push("/home"), 1000);
     } catch (err) {
-      console.log(err);
+      let messageErr = "";
+      if (err.status === 401) {
+        messageErr = "Email hoặc mật khẩu không chính xác";
+      } else if (err.status === 400) {
+        messageErr = "Yêu cầu không hợp lệ!";
+      } else if (err.status === 500) {
+        messageErr = "Lỗi server, vui lòng thử lại!";
+      } else {
+        messageErr = err.message;
+      }
 
       Swal.fire({
         icon: "error",
-        title: "Login failed!",
-        text: err.message || "Email or password is not correct.",
+        title: "Đăng nhập thất bại!",
+        text: messageErr,
       });
-      setError(err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
+      {isLoading && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <ClipLoader size={50} color="blue" />
+        </div>
+      )}
       <ToastContainer />
       <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-blue-100 to-blue-500 px-4">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 w-full max-w-6xl py-10">
@@ -125,7 +138,12 @@ const Page = () => {
                 </button>
               </div>
               <div className="flex justify-end mb-4">
-                <a href="/auth/forgot-password">Forget pasword?</a>
+                <a
+                  href="/auth/forgot-password"
+                  className="text-blue-600 italic hover:text-blue-500"
+                >
+                  Quên mật khẩu?
+                </a>
               </div>
 
               <button
