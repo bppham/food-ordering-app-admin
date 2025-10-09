@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import "./home.css";
 import Chart from "../../components/Chart/Chart";
 import FeaturedInfo from "../../components/FeaturedInfo/FeaturedInfo";
 import { getMonthlyOrders } from "../../api/home";
@@ -42,9 +41,11 @@ const home = () => {
   };
 
   return (
-    <div className="home">
-      <FeaturedInfo />
-      <Chart data={orderData} title="Order Analytics" grid dataKey="total" />
+    <div className="">
+      <div className=" h-[calc(100vh-100px)]">
+        <FeaturedInfo />
+        <Chart data={orderData} title="Order Analytics" grid dataKey="total" />
+      </div>
     </div>
   );
 };

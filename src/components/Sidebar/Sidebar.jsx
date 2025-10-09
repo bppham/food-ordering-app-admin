@@ -1,137 +1,61 @@
 "use client";
-import React from "react";
-import "./Sidebar.css";
 import Link from "next/link";
 import Image from "next/image";
+import sidebarData from "../../../data/sidebar";
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen }) => {
   return (
-    <div className="sidebar">
-      <div className="sidebar-container">
-        <div className="sidebar-menu">
-          <div className="sidebar-title">Dashboard</div>
-          <ul className="sidebar-list">
-            <Link href="/home" className="link">
-              <li className="sidebar-list-item">
-                <div className=" relative w-[30px] h-[30px] pt-[30px]">
-                  <Image
-                    src="/assets/admin-icons/home.png"
-                    alt=""
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-[8px]"
-                  />
-                </div>
-                <span>Home</span>
-              </li>
-            </Link>
-
-            <Link href="/dashboard/store-request" className="link">
-              <li className="sidebar-list-item">
-                <div className=" relative w-[30px] h-[30px] pt-[30px]">
-                  <Image
-                    src="/assets/admin-icons/store.png"
-                    alt=""
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-[8px]"
-                  />
-                </div>
-                <span>Store Request</span>
-              </li>
-            </Link>
-
-            <Link href="/dashboard/shipper-request" className="link">
-              <li className="sidebar-list-item">
-                <div className=" relative w-[30px] h-[30px] pt-[30px]">
-                  <Image
-                    src="/assets/admin-icons/interview.png"
-                    alt=""
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-[8px]"
-                  />
-                </div>
-                <span>Shipper Request</span>
-              </li>
-            </Link>
-          </ul>
+    <div
+      className={`
+    fixed md:sticky
+    top-[60px] md:top-[60px]
+    h-[calc(100vh-60px)] bg-white shadow-md border-r border-gray-200
+    transform transition-transform duration-300 z-40
+    ${isOpen ? "translate-x-0" : "-translate-x-full"}
+    md:translate-x-0 md:shadow-none md:w-[250px]
+  `}
+    >
+      {/* Logo chỉ hiện mobile */}
+      <div className="md:hidden block p-4">
+        <div className="flex items-center gap-2">
+          <Image
+            src="/assets/logo.png"
+            alt="Logo"
+            width={40}
+            height={40}
+            className="rounded-[8px]"
+          />
+          <span className="font-semibold text-lg tracking-wider text-blue-700">
+            MANAGEMENT
+          </span>
         </div>
+      </div>
 
-        <div className="sidebar-menu">
-          <div className="sidebar-title">List Management</div>
-          <ul className="sidebar-list">
-            <Link href="/management/stores">
-              <li className="sidebar-list-item">
-                <div className=" relative w-[30px] h-[30px] pt-[30px]">
-                  <Image
-                    src="/assets/admin-icons/restaurant.png"
-                    alt=""
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-[8px]"
-                  />
-                </div>
-                <span>Stores</span>
-              </li>
-            </Link>
-
-            <Link href="/management/shippers">
-              <li className="sidebar-list-item">
-                <div className=" relative w-[30px] h-[30px] pt-[30px]">
-                  <Image
-                    src="/assets/admin-icons/fast-delivery.png"
-                    alt=""
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-[8px]"
-                  />
-                </div>
-                <span>Shippers</span>
-              </li>
-            </Link>
-          </ul>
-        </div>
-
-        <div className="sidebar-menu">
-          <div className="sidebar-title">App management</div>
-          <ul className="sidebar-list">
-            <Link href="/food-type">
-              <li className="sidebar-list-item">
-                <div className=" relative w-[30px] h-[30px] pt-[30px]">
-                  <Image
-                    src="/assets/admin-icons/category.png"
-                    alt=""
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-[8px]"
-                  />
-                </div>
-                <span>Food Type</span>
-              </li>
-            </Link>
-          </ul>
-        </div>
-
-        <div className="sidebar-menu">
-          <div className="sidebar-title">Staff</div>
-          <ul className="sidebar-list">
-            <Link href="/employee">
-              <li className="sidebar-list-item">
-                <div className=" relative w-[30px] h-[30px] pt-[30px]">
-                  <Image
-                    src="/assets/admin-icons/group.png"
-                    alt=""
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-[8px]"
-                  />
-                </div>
-                <span>Employee</span>
-              </li>
-            </Link>
-          </ul>
-        </div>
+      <div className="text-gray-700 p-5 overflow-y-auto h-full md:w-[250px]">
+        {sidebarData.map((menu, index) => (
+          <div key={index} className="mb-6">
+            <div className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
+              {menu.title}
+            </div>
+            <ul className="list-none p-0">
+              {menu.items.map((item, idx) => (
+                <Link href={item.href} key={idx} className="block">
+                  <li className="p-2 cursor-pointer flex items-center rounded-md gap-3 hover:bg-gray-100">
+                    <div className="relative w-[24px] h-[24px]">
+                      <Image
+                        src={item.icon}
+                        alt={item.label}
+                        fill
+                        className="rounded-md object-cover"
+                      />
+                    </div>
+                    <span className="text-sm">{item.label}</span>
+                  </li>
+                </Link>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </div>
   );

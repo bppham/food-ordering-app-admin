@@ -26,8 +26,8 @@ const Page = () => {
     try {
       const res = await login(email, password);
 
-      localStorage.setItem("token", res.data.accessToken);
-      localStorage.setItem("user", JSON.stringify(res.data.admin));
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("adminId", JSON.stringify(res.data._id));
 
       toast.success("Đăng nhập thành công!", {
         position: "top-right",

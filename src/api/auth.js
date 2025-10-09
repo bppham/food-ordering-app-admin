@@ -4,7 +4,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URI;
 
 export const login = async (email, password) => {
   try {
-    const res = await publicApi.post("/auth/admin/login", {
+    const res = await publicApi.post("/auth/login/admin", {
       email,
       password,
     });
