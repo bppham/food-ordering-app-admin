@@ -41,6 +41,7 @@
     "react-helmet": "^6.1.0",
     "react-icons": "^5.4.0",
     "react-leaflet": "v5.0.0-rc.1",
+    "react-modal-image": "^2.6.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.5",
     "react-spinners": "^0.17.0",

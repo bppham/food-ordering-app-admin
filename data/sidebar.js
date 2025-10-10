@@ -15,18 +15,18 @@ const sidebarData = [
     items: [
       {
         label: "Duyệt yêu cầu",
-        href: "/dashboard/store-request",
+        href: "/store/request",
         icon: "/assets/admin-icons/store.png",
       },
       {
-        label: "Cửa hàng",
-        href: "/management/stores",
+        label: "Cửa hàng hoạt động",
+        href: "/store/management/active",
         icon: "/assets/admin-icons/restaurant.png",
       },
       {
-        label: "Nhân viên cửa hàng",
-        href: "/employee",
-        icon: "/assets/admin-icons/group.png",
+        label: "Cửa hàng bị khóa",
+        href: "/store/management/block",
+        icon: "/assets/admin-icons/homeless.png",
       },
     ],
   },

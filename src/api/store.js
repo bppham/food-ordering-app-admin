@@ -1,81 +1,80 @@
-import axios from "axios";
+import authApi from "./instances/authApi";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URI;
-
-const getAuthHeaders = () => {
-  const token = localStorage.getItem("token");
-  return token ? { Authorization: `Bearer ${token}` } : {};
-};
-
-export const getAllStores = async () => {
+export const getAllStoreRequest = async (
+  status,
+  page = 1,
+  limit = 5,
+  search = "",
+  sort = "name_asc"
+) => {
   try {
-    const response = await axios.get(`${BASE_URL}/api/v1/store/ongoing`, {
-      headers: getAuthHeaders(),
+    const res = await authApi.get(`/store/status/${status}`, {
+      params: { page, limit, search, sort },
     });
-    return response.data;
+    return res.data;
   } catch (error) {
-    console.error(
-      "Error get all stores:",
-      error.response?.data?.message || error.message
-    );
-    throw error;
+    throw error.response;
   }
 };
 
-export const getPendingStores = async () => {
+export const getInformation = async (storeId) => {
   try {
-    const response = await axios.get(`${BASE_URL}/api/v1/store/pending`, {
-      headers: getAuthHeaders(),
+    const res = await authApi.get(`/store/${storeId}/detail`);
+    return res.data;
+  } catch (error) {
+    throw error.response;
+  }
+};
+export const approveStore = async (id) => {
+  try {
+    const response = await authApi.put(`/store/${id}/approve`);
+    return response.data;
+  } catch (error) {
+    throw error.response;
+  }
+};
+
+export const blockStore = async (id) => {
+  try {
+    const response = await authApi.put(`/store/${id}/block`);
+    return response.data;
+  } catch (error) {
+    throw error.response;
+  }
+};
+
+export const unblockStore = async (id) => {
+  try {
+    const response = await authApi.put(`/store/${id}/unblock`);
+    return response.data;
+  } catch (error) {
+    throw error.response;
+  }
+};
+
+export const updateSystemCategory = async (id, name, image) => {
+  try {
+    const response = await authApi.put(`/system-categories/${id}`, {
+      name,
+      image,
     });
+
     return response.data;
   } catch (error) {
-    console.error(
-      "Error get pending stores:",
-      error.response?.data?.message || error.message
-    );
-    throw error;
+    throw error.response;
   }
 };
 
-export const getStoreInformation = async (id) => {
-  try {
-    const response = await axios.get(`${BASE_URL}/api/v1/store/${id}`, {
-      headers: getAuthHeaders(),
-    });
-    return response.data;
-  } catch (error) {
-    console.error(
-      "Error get store information:",
-      error.response?.data?.message || error.message
-    );
-    throw error;
+export const deleteSystemCategory = async (id) => {
+  if (!id) {
+    throw new Error("ID is missing");
   }
-};
 
-export const approveStore = async (storeId) => {
   try {
-    const response = await axios.patch(
-      `${BASE_URL}/api/v1/store/${storeId}/approve`,
-      {},
-      { headers: getAuthHeaders() }
-    );
+    const response = await authApi.delete(`/system-categories/${id}`);
+
     return response.data;
   } catch (error) {
-    console.log("Error can not approve store: ", error);
-    throw error;
-  }
-};
-
-export const blockStore = async (storeId) => {
-  try {
-    const response = await axios.patch(
-      `${BASE_URL}/api/v1/store/${storeId}/block`,
-      {},
-      { headers: getAuthHeaders() }
-    );
-    return response.data;
-  } catch (error) {
-    console.log("Error can not block store: ", error);
-    throw error;
+    throw error.response;
   }
 };

@@ -162,7 +162,7 @@ const Page = () => {
 
       {/* Table */}
       {/* Table container */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto border-solid border border-gray-300 rounded-lg p-2">
         <table className="table-auto min-w-[600px] border-collapse w-full">
           <thead className="text-sm">
             <tr className="bg-gray-100">
