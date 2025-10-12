@@ -93,6 +93,16 @@ const sidebarData = [
         href: "/system-category",
         icon: "/assets/admin-icons/category.png",
       },
+      {
+        label: "Quản lý Tags",
+        href: "/system-category",
+        icon: "/assets/admin-icons/tag.png",
+      },
+      {
+        label: "Phí vận chuyển",
+        href: "/shipping-fee",
+        icon: "/assets/admin-icons/shipping-fee.png",
+      },
     ],
   },
 ];
