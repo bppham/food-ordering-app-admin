@@ -50,7 +50,7 @@ const sidebarData = [
     items: [
       {
         label: "Khách hàng",
-        href: "/customer/management",
+        href: "/customer",
         icon: "/assets/admin-icons/review.png",
       },
     ],
