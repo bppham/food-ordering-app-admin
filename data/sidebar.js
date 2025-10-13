@@ -35,12 +35,12 @@ const sidebarData = [
     items: [
       {
         label: "Duyệt yêu cầu",
-        href: "/dashboard/shipper-request",
+        href: "/shipper/request",
         icon: "/assets/admin-icons/interview.png",
       },
       {
         label: "Shippers",
-        href: "/management/shippers",
+        href: "/shipper/management",
         icon: "/assets/admin-icons/fast-delivery.png",
       },
     ],
@@ -50,7 +50,7 @@ const sidebarData = [
     items: [
       {
         label: "Khách hàng",
-        href: "/management/shippers",
+        href: "/customer/management",
         icon: "/assets/admin-icons/review.png",
       },
     ],
@@ -60,7 +60,7 @@ const sidebarData = [
     items: [
       {
         label: "Nhân viên quản trị",
-        href: "/management/shippers",
+        href: "/admin",
         icon: "/assets/admin-icons/admin.png",
       },
     ],
