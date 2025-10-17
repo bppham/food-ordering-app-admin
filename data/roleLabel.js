@@ -1,4 +1,5 @@
 export const ROLE_LABELS = {
+  SUPER_ADMIN: "Super Admin",
   HR_MANAGER: "Quản lý nhân sự",
   CUSTOMER_MANAGER: "Quản lý khách hàng",
   STORE_MANAGER: "Quản lý cửa hàng",

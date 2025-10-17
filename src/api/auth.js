@@ -1,5 +1,6 @@
 import axios from "axios";
 import publicApi from "./instances/publicApi";
+import authApi from "./instances/authApi";
 const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URI;
 
 export const login = async (email, password) => {
@@ -35,19 +36,12 @@ export const verifyOldPassword = async (oldPassword) => {
   }
 };
 
-export const resetPassword = async (newPassword, id) => {
+export const changePassword = async (data) => {
   try {
-    const token = localStorage.getItem("token");
-    const response = await axios.put(
-      `${BASE_URL}/api/v1/employee/reset-password/${id}`,
-      { newPassword },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    throw error.response?.data?.message;
+    const res = await authApi.put(`/auth/admin/profile/password`, data);
+    return res.data;
+  } catch (err) {
+    throw err.response;
   }
 };
 
