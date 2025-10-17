@@ -44,6 +44,9 @@ const Page = () => {
   const handleChangePasswordClose = () => setShowChangePasswordPopup(false);
 
   const handleVerifiedOldPassword = async () => {
+    if (!oldPassword) {
+      toast.error("Vui lòng nhập mật khẩu hiện tại!");
+    }
     try {
       const res = await checkCurrentPassword({ currentPassword: oldPassword });
       if (res.data) {
@@ -156,7 +159,7 @@ const Page = () => {
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
                 required
-                className="w-full border border-gray-400 rounded-lg p-2 pr-9 text-base focus:ring-2 focus:ring-blue-400 outline-none"
+                className="w-full border border-solid border-gray-400 rounded-lg p-2 pr-9 text-base focus:ring-2 focus:ring-blue-400 outline-none"
               />
               <span
                 onClick={togglePasswordVisibility}

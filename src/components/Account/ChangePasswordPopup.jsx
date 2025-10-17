@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { changePassword } from "../../api/auth";
-
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 const ChangePasswordPopup = ({ onClose, employee }) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -43,7 +43,7 @@ const ChangePasswordPopup = ({ onClose, employee }) => {
               type={showNewPassword ? "text" : "password"}
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-3 py-2 border border-solid border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               required
             />
             <button
@@ -51,7 +51,11 @@ const ChangePasswordPopup = ({ onClose, employee }) => {
               onClick={() => setShowNewPassword((prev) => !prev)}
               className="absolute right-3 text-lg"
             >
-              {showNewPassword ? "🙈" : "👁️"}
+              {showNewPassword ? (
+                <AiOutlineEyeInvisible size={22} />
+              ) : (
+                <AiOutlineEye size={22} />
+              )}
             </button>
           </div>
         </div>
@@ -64,14 +68,18 @@ const ChangePasswordPopup = ({ onClose, employee }) => {
               type={showConfirmPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-3 py-2 border border-solid border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             />
             <button
               type="button"
               onClick={() => setShowConfirmPassword((prev) => !prev)}
               className="absolute right-3 text-lg"
             >
-              {showConfirmPassword ? "🙈" : "👁️"}
+              {showConfirmPassword ? (
+                <AiOutlineEyeInvisible size={22} />
+              ) : (
+                <AiOutlineEye size={22} />
+              )}
             </button>
           </div>
         </div>

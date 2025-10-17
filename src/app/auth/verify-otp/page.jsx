@@ -2,8 +2,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./verify-otp.css";
-import { checkOTP, forgetPassword } from "../../../api/auth";
+import { checkOTP, forgotPassword } from "../../../api/auth";
 import { useRouter } from "next/navigation";
 
 const Page = () => {
@@ -46,18 +45,14 @@ const Page = () => {
 
   const handleChange = (e, index) => {
     const value = e.target.value;
-
     if (!/^\d$/.test(value)) {
       e.target.value = "";
       return;
     }
-
-    // Cập nhật giá trị OTP
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
 
-    // Di chuyển sang ô tiếp theo nếu có
     if (inputsRef.current[index + 1]) {
       inputsRef.current[index + 1].focus();
     }
@@ -73,30 +68,27 @@ const Page = () => {
     }
   };
 
-  // Gửi OTP lên backend để xác thực
   const handleVerifyOTP = async () => {
     if (expired) {
-      toast.error("OTP expired, please click resend OTP.");
+      toast.error("OTP hết hạn, hãy click gửi lại OTP.");
       return;
     }
 
-    const enteredOTP = otp.join(""); // Ghép 6 số thành một chuỗi
+    const enteredOTP = otp.join("");
     if (enteredOTP.length !== 6) {
-      toast.error("Please fill all the verify codes.");
+      toast.error("Vui lòng điền đầy đủ mã OTP.");
       return;
     }
 
     try {
       setLoading(true);
-      const response = await checkOTP(email, enteredOTP); // Gọi API
-      toast.success(
-        "Verify successfully, processing to reset password page"
-      );
+      await checkOTP({ email, otp: enteredOTP });
+      toast.success("Xác thực thành công, đang chuyển sang trang tiếp");
       setTimeout(() => {
-        router.push("/auth/reset-password"); // Chuyển hướng đến trang đặt lại mật khẩu
+        router.push("/auth/reset-password");
       }, 1500);
     } catch (error) {
-      toast.error(error.message || "The OTP is incorrected or expired");
+      toast.error(error.message || "The OTP hết hạn hoặc không chính xác");
     } finally {
       setLoading(false);
     }
@@ -104,36 +96,33 @@ const Page = () => {
 
   const handleSendOTP = async () => {
     try {
-      const response = await forgetPassword(email);
-      toast.success("Resend the code successfully!");
-
-      // Reset thời gian đếm ngược và trạng thái hết hạn
+      await forgotPassword({ email });
+      toast.success("Gửi lại OTP thành công!");
       setTimeLeft(120);
       setExpired(false);
-      setOtp(["", "", "", "", "", ""]); // Reset các ô nhập OTP
-      inputsRef.current[0]?.focus(); // Đưa con trỏ về ô đầu tiên
+      setOtp(["", "", "", "", "", ""]);
+      inputsRef.current[0]?.focus();
     } catch (error) {
       console.log(error);
-      toast.error(error.message || "Resend the code failed!");
+      toast.error(error.message || "Gửi lại OTP thất bại!");
     }
   };
 
   return (
-    <div className="verify-otp-container">
+    <div className="flex items-center justify-center h-screen bg-gradient-to-b from-blue-100 to-blue-500">
       <ToastContainer />
-      <div className="verify-otp-card">
-        <h3>Your OTP</h3>
-        <p>(Check your email)</p>
+      <div className="bg-white bg-opacity-95 p-8 rounded-xl shadow-lg w-96 text-center">
+        <h3 className="text-2xl font-bold mb-2">Xác thực OTP</h3>
+        <p className="text-sm text-gray-600 mb-5">(Kiểm tra email của bạn)</p>
 
-        <div className="otp-input-group">
-          {[...Array(6)].map((_, index) => (
+        <div className="flex justify-center gap-2.5 mb-5">
+          {Array.from({ length: 6 }).map((_, index) => (
             <input
               key={index}
               ref={(el) => (inputsRef.current[index] = el)}
               type="text"
-              maxLength="1"
-              pattern="[0-9]{1}"
-              className="otp-input"
+              maxLength={1}
+              className="border-solid w-11 h-12 text-center text-xl border-2 border-gray-300 rounded-lg outline-none focus:border-black focus:shadow-[0_0_8px_rgba(125,60,255,0.5)] disabled:bg-gray-200"
               onChange={(e) => handleChange(e, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
               disabled={expired}
@@ -141,28 +130,38 @@ const Page = () => {
           ))}
         </div>
 
-        <div className="countdown-timer">
-          <p>
-            OTP expire in: <span>{formatTime(timeLeft)}</span>
-          </p>
-        </div>
+        <p className="mb-4 text-gray-700">
+          OTP hết hạn trong:
+          <span className="font-bold">{formatTime(timeLeft)}</span>
+        </p>
 
         <button
-          className="verify-btn"
           onClick={handleVerifyOTP}
           disabled={expired || loading}
+          className={`w-full py-3 text-white font-bold uppercase rounded-lg transition-colors ${
+            loading ? "bg-gray-600" : "bg-black hover:bg-gray-900"
+          }`}
         >
-          {loading
-            ? "Processing..."
-            : expired
-            ? "OTP expired"
-            : "Confirm"}
+          {loading ? "Xác thực..." : expired ? "OTP hết hạn" : "Xác thực"}
         </button>
 
-        <div className="resend-options">
-          <p>Don't see the OTP code?</p>
-          <a onClick={handleSendOTP}>Resend</a> |{" "}
-          <a href="/auth/forgot-password">Change email</a>
+        <div className="my-4 text-sm text-gray-700">
+          <p>Không thấy mã OTP?</p>
+          <div className="flex justify-center gap-2 mt-1">
+            <button
+              onClick={handleSendOTP}
+              className="text-blue-700 font-bold hover:underline"
+            >
+              Gửi lại
+            </button>
+            <span>|</span>
+            <a
+              href="/auth/forgot-password"
+              className="text-blue-700 font-bold hover:underline"
+            >
+              Đổi lại email
+            </a>
+          </div>
         </div>
       </div>
     </div>

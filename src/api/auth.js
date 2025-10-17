@@ -1,7 +1,5 @@
-import axios from "axios";
 import publicApi from "./instances/publicApi";
 import authApi from "./instances/authApi";
-const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URI;
 
 export const login = async (email, password) => {
   try {
@@ -19,23 +17,6 @@ export const login = async (email, password) => {
   }
 };
 
-export const verifyOldPassword = async (oldPassword) => {
-  try {
-    const token = localStorage.getItem("token");
-    const response = await axios.post(
-      `${BASE_URL}/api/v1/employee/verify-password`,
-      { oldPassword },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error.response?.data?.message || "Error happend!";
-  }
-};
-
 export const changePassword = async (data) => {
   try {
     const res = await authApi.put(`/auth/admin/profile/password`, data);
@@ -45,40 +26,29 @@ export const changePassword = async (data) => {
   }
 };
 
-// handle forget password
-export const forgetPassword = async (email) => {
+export const forgotPassword = async (data) => {
   try {
-    const response = await axios.post(
-      `${BASE_URL}/api/v1/auth/forgot-password/employee`,
-      { email }
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw new Error(error.response?.data?.message || "Error!");
+    const res = await publicApi.post(`/auth/admin/forgot-password`, data);
+    return res.data;
+  } catch (err) {
+    throw err.response;
   }
 };
 
-export const checkOTP = async (email, otp) => {
+export const checkOTP = async (data) => {
   try {
-    const response = await axios.post(
-      `${BASE_URL}/api/v1/auth/check-otp/employee`,
-      { email, otp }
-    );
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response?.data?.message || "Error!");
+    const res = await publicApi.post(`/auth/admin/verify-otp`, data);
+    return res.data;
+  } catch (err) {
+    throw err.response;
   }
 };
 
-export const resetPasswordWithEmail = async (email, password) => {
+export const resetPasswordWithEmail = async (data) => {
   try {
-    const response = await axios.put(
-      `${BASE_URL}/api/v1/auth/reset-password/employee`,
-      { email, password }
-    );
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response?.data?.message || "Error!");
+    const res = await publicApi.put(`/auth/admin/reset-password`, data);
+    return res.data;
+  } catch (err) {
+    throw err.response;
   }
 };
