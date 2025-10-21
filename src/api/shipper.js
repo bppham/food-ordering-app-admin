@@ -1,70 +1,46 @@
-import axios from "axios";
+import authApi from "./instances/authApi";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URI;
-
-const getAuthHeaders = () => {
-  const token = localStorage.getItem("token"); // Lấy token từ localStorage
-  return token ? { Authorization: `Bearer ${token}` } : {};
-};
-
-export const getPendingShippers = async () => {
+export const getRequests = async (
+  page = 1,
+  limit = 5,
+  search = "",
+  sort = "createdAt_desc"
+) => {
   try {
-    const response = await axios.get(`${BASE_URL}/api/v1/shipper/pending`);
-    return response.data;
-  } catch (error) {
-    console.error("Lỗi khi lấy danh sách FoodType:", error);
-    throw error;
-  }
-};
-
-export const approveShipper = async (shipperId) => {
-  try {
-    const response = await axios.patch(
-      `${BASE_URL}/api/v1/shipper/${shipperId}/approve`,
-      {},
-      { headers: getAuthHeaders() }
-    );
-    return response.data;
-  } catch (error) {
-    console.log("Error can not approve shipper: ", error);
-    throw error;
-  }
-};
-
-export const blockShipper = async (shipperId) => {
-  try {
-    const response = await axios.patch(
-      `${BASE_URL}/api/v1/shipper/${shipperId}/block`,
-      {},
-      { headers: getAuthHeaders() }
-    );
-    return response.data;
-  } catch (error) {
-    console.log("Error can not block shipper: ", error);
-    throw error;
-  }
-};
-
-export const getCurrentShippers = async () => {
-  try {
-    const resposne = await axios.get(`${BASE_URL}/api/v1/shipper/current`);
-    console.log(resposne);
-    return resposne.data;
-  } catch (error) {
-    console.log("Error can not approve shipper: ", error);
-    throw error;
-  }
-};
-
-export const deleteShipper = async (id) => {
-  try {
-    const response = await axios.delete(`${BASE_URL}/api/v1/shipper/${id}`, {
-      headers: getAuthHeaders(),
+    const res = await authApi.get(`/shipper/request/`, {
+      params: { page, limit, search, sort },
     });
-    console.log(response);
+    return res.data;
+  } catch (error) {
+    throw error.response;
+  }
+};
+
+export const approveShipper = async (id) => {
+  try {
+    const response = await authApi.put(`/shipper/${id}/approve`);
     return response.data;
   } catch (error) {
-    console.log("Error can not delete shipper: ", error);
-    throw error;
+    throw error.response;
+  }
+};
+
+export const getAllShippers = async (query = {}) => {
+  try {
+    const res = await authApi.get(`/shipper/all`, {
+      params: query,
+    });
+    return res.data;
+  } catch (err) {
+    throw err.response;
+  }
+};
+
+export const toggleStatusShipper = async (shipperId) => {
+  try {
+    const res = await authApi.put(`/shipper/${shipperId}/toggle-status`);
+    return res.data;
+  } catch (err) {
+    throw err.response;
   }
 };

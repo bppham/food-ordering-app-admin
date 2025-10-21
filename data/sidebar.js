@@ -70,17 +70,17 @@ const sidebarData = [
     items: [
       {
         label: "Thống kê khách hàng",
-        href: "/food-type",
+        href: "/statistic/user",
         icon: "/assets/admin-icons/chart.png",
       },
       {
         label: "Thống kê Cửa hàng",
-        href: "/food-type",
+        href: "/statistic/store",
         icon: "/assets/admin-icons/pie-chart.png",
       },
       {
         label: "Thống kế shipper",
-        href: "/food-type",
+        href: "/statistic/shipper",
         icon: "/assets/admin-icons/monitor.png",
       },
     ],

@@ -1,6 +1,4 @@
-import axios from "axios";
 import publicApi from "./instances/publicApi";
-const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URI;
 
 export const uploadImage = async (file) => {
   try {
