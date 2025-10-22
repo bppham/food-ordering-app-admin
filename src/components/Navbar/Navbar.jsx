@@ -8,37 +8,26 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-import { getEmployee } from "../../api/employee";
+import { getProfile } from "../../api/profile";
 
 const Navbar = ({ toggleSidebar }) => {
   const [avatar, setAvatar] = useState(null);
-  const [employeeId, setEmployeeId] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
-
-  useEffect(() => {
-    // Chỉ chạy sau khi component đã mount trên client
-    if (typeof window !== "undefined") {
-      const employee = localStorage.getItem("adminId");
-      setEmployeeId(employee);
-    }
-  }, []);
 
   useEffect(() => {
     const fetchInfo = async () => {
       try {
-        if (!employeeId) return;
-        const response = await getEmployee(employeeId);
-        setAvatar(response.avatar.url);
+        const response = await getProfile();
+        setAvatar(response.data.avatarImage.url);
       } catch (error) {
-        console.error("Error get info employee", error);
+        window.location.href = "/auth/login";
       }
     };
     fetchInfo();
-  }, [employeeId]);
+  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    localStorage.clear();
     window.location.href = "/auth/login";
   };
   return (
@@ -47,13 +36,13 @@ const Navbar = ({ toggleSidebar }) => {
         <div className="md:hidden block">
           <button
             type="button"
-            className="border border-solid border-gray-200 rounded-md p-2 ml-4 hover:bg-gray-100"
+            className="border border-solid border-white rounded-md p-2 ml-4 hover:bg-gray-100 text-white hover:text-gray-600"
             onClick={toggleSidebar}
           >
             <FontAwesomeIcon icon={faBars} />
           </button>
         </div>
-        <div className="md:block hidden">
+        <a className="md:block hidden" href="/home">
           <div className="flex items-center gap-2">
             <Image
               src="/assets/logo.png"
@@ -66,7 +55,7 @@ const Navbar = ({ toggleSidebar }) => {
               PTIT ENJOY MANAGEMENT
             </span>
           </div>
-        </div>
+        </a>
         <div>
           <img
             src={
