@@ -2,8 +2,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import sidebarData from "../../../data/sidebar";
+import { getCurrentUser } from "../../utils/auth";
 
 const Sidebar = ({ isOpen }) => {
+  const user = getCurrentUser();
+  const roles = user?.role || [];
   return (
     <div
       className={`
@@ -31,31 +34,41 @@ const Sidebar = ({ isOpen }) => {
         </div>
       </div>
 
-      <div className="text-gray-700 p-5 overflow-y-auto h-full md:w-[250px]">
-        {sidebarData.map((menu, index) => (
-          <div key={index} className="mb-6">
-            <div className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
-              {menu.title}
+      <div className="text-gray-700 p-5 overflow-y-auto h-full md:w-[250px] border-0 border-r border-gray-300 border-solid">
+        {sidebarData.map((menu, index) => {
+          // lọc item có quyền
+          const filteredItems = menu.items.filter((item) =>
+            item.roles ? item.roles.some((r) => roles.includes(r)) : trueb
+          );
+
+          // nếu không có item nào hợp lệ thì ẩn luôn cả group
+          if (filteredItems.length === 0) return null;
+
+          return (
+            <div key={index} className="mb-6">
+              <div className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-2">
+                {menu.title}
+              </div>
+              <ul className="list-none p-0">
+                {filteredItems.map((item, idx) => (
+                  <Link href={item.href} key={idx} className="block">
+                    <li className="p-2 cursor-pointer flex items-center rounded-md gap-3 hover:bg-gray-100">
+                      <div className="relative w-[24px] h-[24px]">
+                        <Image
+                          src={item.icon}
+                          alt={item.label}
+                          fill
+                          className="rounded-md object-cover"
+                        />
+                      </div>
+                      <span className="text-sm">{item.label}</span>
+                    </li>
+                  </Link>
+                ))}
+              </ul>
             </div>
-            <ul className="list-none p-0">
-              {menu.items.map((item, idx) => (
-                <Link href={item.href} key={idx} className="block">
-                  <li className="p-2 cursor-pointer flex items-center rounded-md gap-3 hover:bg-gray-100">
-                    <div className="relative w-[24px] h-[24px]">
-                      <Image
-                        src={item.icon}
-                        alt={item.label}
-                        fill
-                        className="rounded-md object-cover"
-                      />
-                    </div>
-                    <span className="text-sm">{item.label}</span>
-                  </li>
-                </Link>
-              ))}
-            </ul>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
