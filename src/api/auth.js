@@ -10,10 +10,7 @@ export const login = async (email, password) => {
 
     return res.data;
   } catch (err) {
-    throw {
-      status: err.response?.status,
-      message: err.response?.data?.message || "Đăng nhập thất bại!",
-    };
+    throw err.response;
   }
 };
 

@@ -36,8 +36,11 @@ const Page = () => {
 
       setTimeout(() => router.push("/home"), 1000);
     } catch (err) {
+      console.log(err);
       let messageErr = "";
-      if (err.status === 401) {
+      if (err.data.errorCode === "ACCOUNT_BLOCKED") {
+        messageErr = "Tài khoản của bạn đã bị khóa";
+      } else if (err.data.errorCode === "INVALID_CREDENTIALS") {
         messageErr = "Email hoặc mật khẩu không chính xác";
       } else if (err.status === 400) {
         messageErr = "Yêu cầu không hợp lệ!";
