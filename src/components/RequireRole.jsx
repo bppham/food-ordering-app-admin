@@ -13,6 +13,7 @@ export default function RequireRole({ children }) {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
+      console.error("Right herre ");
       router.replace("/auth/login");
       return;
     }

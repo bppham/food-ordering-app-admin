@@ -131,10 +131,10 @@ const Page = () => {
                 Thứ tự
               </th>
               <th className="px-4 py-2 text-left border-b border-gray-300">
-                Mức vận chuyển
+                Mức vận chuyển (km)
               </th>
               <th className="px-4 py-2 text-left border-b border-gray-300">
-                Phí
+                Phí (VND)
               </th>
               <th className="px-4 py-2 text-left border-b border-gray-300">
                 Hành động
@@ -151,7 +151,7 @@ const Page = () => {
                   {shippingFee.fromDistance}
                 </td>
                 <td className="px-4 py-2 border-b border-gray-300">
-                  {shippingFee.feePerKm}
+                  {Number(shippingFee.feePerKm).toLocaleString("vi-VN")}
                 </td>
                 <td className="px-4 py-2 border-b border-gray-300">
                   <div className="flex gap-3">

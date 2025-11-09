@@ -4,7 +4,7 @@ export const ROLE_LABELS = {
   CUSTOMER_MANAGER: "Quản lý khách hàng",
   STORE_MANAGER: "Quản lý cửa hàng",
   SYSTEM_MANAGER: "Quản lý hệ thống",
-  SHIPPER_MANAGER: "Quản lý vận chuyển",
+  SHIPPER_MANAGER: "Quản lý shipper",
   CHIEF_MANAGER: "Trưởng bộ phận",
 };
 
@@ -19,4 +19,5 @@ export const RoleOptions = [
   { value: "CUSTOMER_MANAGER", label: ROLE_LABELS.CUSTOMER_MANAGER },
   { value: "STORE_MANAGER", label: ROLE_LABELS.STORE_MANAGER },
   { value: "SHIPPER_MANAGER", label: ROLE_LABELS.SHIPPER_MANAGER },
+  { value: "CHIEF_MANAGER", label: ROLE_LABELS.CHIEF_MANAGER },
 ];

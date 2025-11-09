@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
   );
 
   return (
-    <html lang="en">
+    <html>
       <body className="h-screen overflow-hidden">
         {isAuthPage ? (
           content

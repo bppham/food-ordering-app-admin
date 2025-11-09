@@ -154,5 +154,9 @@ a {
 
 /* Admin */
 .admin-container {
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
+}
+
+input, select {
+  border: solid 1px;
 }

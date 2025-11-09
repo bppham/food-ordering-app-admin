@@ -20,7 +20,7 @@ const Navbar = ({ toggleSidebar }) => {
         const response = await getProfile();
         setAvatar(response.data.avatarImage.url);
       } catch (error) {
-        window.location.href = "/auth/login";
+       //  window.location.href = "/auth/login";
       }
     };
     fetchInfo();
