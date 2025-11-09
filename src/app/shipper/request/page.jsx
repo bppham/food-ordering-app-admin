@@ -1,13 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import { FaCheck } from "react-icons/fa";
 import { getRequests, approveShipper } from "../../../api/shipper";
 import { useRouter } from "next/navigation";
-
+import { getErrorMessage } from "../../../../data/errorMessages";
 const Page = () => {
   const router = useRouter();
   const [shippers, setShippers] = useState([]);
@@ -50,8 +49,9 @@ const Page = () => {
 
         // Hiển thị thông báo SweetAlert thành công
       } catch (error) {
-        toast.error("Phê duyệt shipper thất bại!");
-        console.error("Error approving shippper:", error);
+        toast.error(
+          getErrorMessage(error.errorCode) || "Phê duyệt shipper thất bại!"
+        );
       }
     }
   };
@@ -64,8 +64,9 @@ const Page = () => {
         setTotalShippers(response.meta.totalShippers);
       }
     } catch (error) {
-      console.error("Error fetch data shipper:", error);
-      toast.error("Không thể tải danh sách shipper!");
+      toast.error(
+        getErrorMessage(error.errorCode) || "Không thể tải danh sách shipper!"
+      );
     }
   };
 

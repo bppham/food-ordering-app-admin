@@ -7,6 +7,7 @@ import ModalImage from "react-modal-image";
 import { FaUnlock } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { getErrorMessage } from "../../../../../../data/errorMessages";
 const Page = () => {
   const router = useRouter();
   const { id } = useParams();
@@ -23,8 +24,9 @@ const Page = () => {
           toast.error("Lỗi khi lấy thông tin cửa hàng: " + res.message);
         }
       } catch (error) {
-        console.error("Lỗi API:", error);
-        toast.error("Không thể tải thông tin cửa hàng");
+        toast.error(
+          getErrorMessage(error.errorCode) || "Không thể tải thông tin cửa hàng"
+        );
       }
     };
 

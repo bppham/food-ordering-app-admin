@@ -7,6 +7,7 @@ import ModalImage from "react-modal-image";
 import { FaLock } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { getErrorMessage } from "../../../../../../data/errorMessages";
 const Page = () => {
   const router = useRouter();
   const { id } = useParams();
@@ -23,8 +24,9 @@ const Page = () => {
           toast.error("Lỗi khi lấy thông tin cửa hàng: " + res.message);
         }
       } catch (error) {
-        console.error("Lỗi API:", error);
-        toast.error("Không thể tải thông tin cửa hàng");
+        toast.error(
+          getErrorMessage(error.errorCode) || "Không thể tải thông tin cửa hàng"
+        );
       }
     };
 
@@ -47,7 +49,6 @@ const Page = () => {
   };
 
   const handleBlock = async (storeId) => {
-    // Hiển thị popup xác nhận
     const result = await Swal.fire({
       title: "Xác nhận Khóa cửa hàng?",
       text: "Bạn có chắc muốn Khóa cửa hàng này không?",
@@ -72,11 +73,9 @@ const Page = () => {
           });
           router.push(`/store/management/active`);
         }
-
-        // Hiển thị thông báo SweetAlert thành công
       } catch (error) {
-        toast.error("Khóa cửa hàng thất bại!");
-        console.error("Error approving store:", error);
+        getErrorMessage(error.errorCode) ||
+          toast.error("Khóa cửa hàng thất bại!");
       }
     }
   };

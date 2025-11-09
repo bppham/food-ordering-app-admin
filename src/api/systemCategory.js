@@ -9,17 +9,16 @@ export const createSystemCategory = async (name, image) => {
 
     return res.data;
   } catch (error) {
-    throw error.response;
+    throw err.response.data || err.response;
   }
 };
 
 export const getSystemCategories = async () => {
   try {
     const res = await authApi.get("/system-categories/count");
-    console.log(res.data);
     return res.data;
   } catch (error) {
-    throw error.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -32,7 +31,7 @@ export const updateSystemCategory = async (id, name, image) => {
 
     return response.data;
   } catch (error) {
-    throw error.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -46,6 +45,6 @@ export const deleteSystemCategory = async (id) => {
 
     return response.data;
   } catch (error) {
-    throw error.response;
+    throw err.response.data || err.response;
   }
 };

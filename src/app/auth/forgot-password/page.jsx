@@ -4,7 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { forgotPassword } from "../../../api/auth";
 import { useRouter } from "next/navigation";
-
+import { getErrorMessage } from "../../../../data/errorMessages";
 const Page = () => {
   const [email, setEmail] = useState("");
   const router = useRouter();
@@ -16,8 +16,7 @@ const Page = () => {
       sessionStorage.setItem("email", email);
       router.push("/auth/verify-otp");
     } catch (error) {
-      console.log(error);
-      toast.error(error.message || "Gửi OTP thất bại");
+      toast.error(getErrorMessage(error.errorCode) || "Gửi OTP thất bại");
     }
   };
 

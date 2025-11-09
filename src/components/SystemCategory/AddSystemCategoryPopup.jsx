@@ -5,6 +5,7 @@ import { FaCamera } from "react-icons/fa";
 
 import { uploadImage } from "../../api/upload";
 import { createSystemCategory } from "../../api/systemCategory";
+import { getErrorMessage } from "../../../data/errorMessages";
 
 const AddSystemCategoryPopup = ({
   showAddPopup,
@@ -55,7 +56,7 @@ const AddSystemCategoryPopup = ({
       setSystemCategory({ name: "", image: null });
       setPreviewImage(null);
     } catch (error) {
-      toast.error(error.data.errorMessage || "Lỗi thêm danh mục");
+      toast.error(getErrorMessage(error.errorCode) || "Lỗi thêm danh mục");
     } finally {
       setLoading(false);
     }

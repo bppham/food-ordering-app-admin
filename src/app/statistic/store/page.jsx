@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { getStoreSummary } from "../../../api/statistics";
-
+import { getErrorMessage } from "../../../../data/errorMessages";
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const page = () => {
@@ -28,7 +28,7 @@ const page = () => {
         setTopDishes(data.topDishes);
       }
     } catch (error) {
-      console.log("Error fetching store summary", error);
+      getErrorMessage(error.errorCode) || "Lỗi lấy thống kê cửa hàng";
     }
   };
 
@@ -44,9 +44,7 @@ const page = () => {
 
   return (
     <div className="p-4 space-y-8">
-      <p className="text-xl font-bold mb-2 ml-2">
-        Thống kê cửa hàng
-      </p>
+      <p className="text-xl font-bold mb-2 ml-2">Thống kê cửa hàng</p>
       {/* Tổng số liệu */}
       <div className="grid grid-cols-3 gap-4">
         <div className="bg-yellow-500 text-white shadow rounded p-4 text-center">

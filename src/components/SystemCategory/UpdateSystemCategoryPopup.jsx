@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { uploadImage } from "../../api/upload";
 import { updateSystemCategory } from "../../api/systemCategory";
-
+import { getErrorMessage } from "../../../data/errorMessages";
 const UpdateSystemCategoryPopup = ({
   selectedCategory,
   onClose,
@@ -42,7 +42,6 @@ const UpdateSystemCategoryPopup = ({
     if (!systemCategory._id) {
       return toast.error("Không tìm thấy id danh mục!");
     }
-
     try {
       setLoading(true);
       let imageId = null;
@@ -69,8 +68,7 @@ const UpdateSystemCategoryPopup = ({
       onSystemCategoryUpdated(res);
       onClose();
     } catch (error) {
-      console.error(error);
-      toast.error(error.data.errorMessage || "Cập nhật thất bại!");
+      toast.error(getErrorMessage(error.errorCode) || "Cập nhật thất bại!");
     } finally {
       setLoading(false);
     }

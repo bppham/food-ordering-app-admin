@@ -5,7 +5,7 @@ export const getDashboardSummary = async () => {
     const res = await authApi.get("/statistics/admin/dashboard");
     return res.data;
   } catch (err) {
-    throw err.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -14,7 +14,7 @@ export const getUserSummary = async () => {
     const res = await authApi.get("/statistics/admin/user");
     return res.data;
   } catch (err) {
-    throw err.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -23,7 +23,7 @@ export const getStoreSummary = async () => {
     const res = await authApi.get("/statistics/admin/store");
     return res.data;
   } catch (err) {
-    throw err.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -32,6 +32,6 @@ export const getShipperSummary = async () => {
     const res = await authApi.get("/statistics/admin/shipper");
     return res.data;
   } catch (err) {
-    throw err.response;
+    throw err.response.data || err.response;
   }
 };

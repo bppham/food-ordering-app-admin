@@ -12,7 +12,7 @@ export const getRequests = async (
     });
     return res.data;
   } catch (error) {
-    throw error.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -21,7 +21,7 @@ export const approveShipper = async (id) => {
     const response = await authApi.put(`/shipper/${id}/approve`);
     return response.data;
   } catch (error) {
-    throw error.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -32,7 +32,7 @@ export const getAllShippers = async (query = {}) => {
     });
     return res.data;
   } catch (err) {
-    throw err.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -41,6 +41,6 @@ export const toggleStatusShipper = async (shipperId) => {
     const res = await authApi.put(`/shipper/${shipperId}/toggle-status`);
     return res.data;
   } catch (err) {
-    throw err.response;
+    throw err.response.data || err.response;
   }
 };

@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import { FaEdit, FaTrash } from "react-icons/fa";
-
+import { getErrorMessage } from "../../../data/errorMessages";
 import AddShippingFee from "../../components/ShippingFee/AddShippingFee";
 import EditShippingFee from "../../components/ShippingFee/EditShippingFee";
 import {
@@ -25,7 +25,10 @@ const Page = () => {
       const res = await getShippingFee();
       setShippingFees(res.data);
     } catch (error) {
-      console.error("Lỗi khi lấy danh sách phí vận chuyển:", error);
+      toast.error(
+        getErrorMessage(error.errorCode) ||
+          "Lỗi khi lấy danh sách phí vận chuyển"
+      );
     }
   };
 
@@ -44,8 +47,9 @@ const Page = () => {
         toast.error(res.message || "Không thể thêm phí vận chuyển");
       }
     } catch (err) {
-      console.error(err);
-      toast.error("Lỗi khi tạo phí vận chuyển");
+      toast.error(
+        getErrorMessage(err.errorCode) || "Lỗi khi tạo phí vận chuyển"
+      );
     }
   };
 
@@ -66,7 +70,9 @@ const Page = () => {
       }
     } catch (err) {
       console.error(err);
-      toast.error("Lỗi khi cập nhật phí vận chuyển");
+      toast.error(
+        getErrorMessage(err.errorCode) || "Lỗi khi cập nhật phí vận chuyển"
+      );
     }
   };
 

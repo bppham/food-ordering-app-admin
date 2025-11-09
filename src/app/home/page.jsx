@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Chart from "../../components/Chart/Chart";
 import { FiUsers, FiHome, FiUser } from "react-icons/fi";
 import { getDashboardSummary } from "../../api/statistics";
+import { getErrorMessage } from "../../../data/errorMessages";
 const page = () => {
   const [orderData, setOrderData] = useState([]);
   const [totalUsers, setTotalUsers] = useState(0);
@@ -18,7 +19,7 @@ const page = () => {
         setTotalShippers(response.data.totalShippers);
       }
     } catch (error) {
-      console.log("Error get order stats");
+      getErrorMessage(error.errorCode);
     }
   };
   useEffect(() => {

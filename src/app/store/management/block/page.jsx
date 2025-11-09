@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import { getAllStoreRequest, unblockStore } from "../../../../api/store";
 import { useRouter } from "next/navigation";
 import { FaUnlock, FaInfoCircle } from "react-icons/fa";
-
+import { getErrorMessage } from "../../../../../data/errorMessages";
 const Page = () => {
   const router = useRouter();
   const [stores, setStores] = useState([]);
@@ -39,8 +39,9 @@ const Page = () => {
         setTotalStores(response.meta.totalStores);
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
-      toast.error("Không thể tải danh sách cửa hàng!");
+      toast.error(
+        getErrorMessage(error.errorCode) || "Không thể tải danh sách cửa hàng!"
+      );
     }
   };
 
@@ -69,7 +70,9 @@ const Page = () => {
           fetchStores(currentPage, searchTerm, sortOrder);
         }
       } catch (error) {
-        toast.error("Mở khóa cửa hàng thất bại!");
+        toast.error(
+          getErrorMessage(error.errorCode) || "Mở khóa cửa hàng thất bại!"
+        );
       }
     }
   };

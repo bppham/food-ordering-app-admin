@@ -20,7 +20,7 @@ const Navbar = ({ toggleSidebar }) => {
         const response = await getProfile();
         setAvatar(response.data.avatarImage.url);
       } catch (error) {
-       //  window.location.href = "/auth/login";
+        console.error(error);
       }
     };
     fetchInfo();
@@ -36,10 +36,10 @@ const Navbar = ({ toggleSidebar }) => {
         <div className="md:hidden block">
           <button
             type="button"
-            className="border border-solid border-white rounded-md p-2 ml-4 hover:bg-gray-100 text-white hover:text-gray-600"
+            className="border-solid border-blue-600 border-2 rounded-md p-2 ml-4 hover:bg-blue-400 text-white hover:text-gray-600"
             onClick={toggleSidebar}
           >
-            <FontAwesomeIcon icon={faBars} />
+            <FontAwesomeIcon icon={faBars} color="white"/>
           </button>
         </div>
         <a className="md:block hidden" href="/home">

@@ -13,7 +13,7 @@ export const getAllStoreRequest = async (
     });
     return res.data;
   } catch (error) {
-    throw error.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -22,7 +22,7 @@ export const getInformation = async (storeId) => {
     const res = await authApi.get(`/store/${storeId}/detail`);
     return res.data;
   } catch (error) {
-    throw error.response;
+    throw err.response.data || err.response;
   }
 };
 export const approveStore = async (id) => {
@@ -30,7 +30,7 @@ export const approveStore = async (id) => {
     const response = await authApi.put(`/store/${id}/approve`);
     return response.data;
   } catch (error) {
-    throw error.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -39,7 +39,7 @@ export const blockStore = async (id) => {
     const response = await authApi.put(`/store/${id}/block`);
     return response.data;
   } catch (error) {
-    throw error.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -48,7 +48,7 @@ export const unblockStore = async (id) => {
     const response = await authApi.put(`/store/${id}/unblock`);
     return response.data;
   } catch (error) {
-    throw error.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -61,7 +61,7 @@ export const updateSystemCategory = async (id, name, image) => {
 
     return response.data;
   } catch (error) {
-    throw error.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -75,6 +75,6 @@ export const deleteSystemCategory = async (id) => {
 
     return response.data;
   } catch (error) {
-    throw error.response;
+    throw err.response.data || err.response;
   }
 };

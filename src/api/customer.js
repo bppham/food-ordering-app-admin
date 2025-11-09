@@ -7,7 +7,7 @@ export const getAllCustomer = async (query = {}) => {
     });
     return res.data;
   } catch (err) {
-    throw err.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -16,6 +16,6 @@ export const toggleStatusCustomer = async (userId) => {
     const res = await authApi.put(`/user/${userId}/toggle-status`);
     return res.data;
   } catch (err) {
-    throw err.response;
+    throw err.response.data || err.response;
   }
 };

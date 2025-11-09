@@ -13,6 +13,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { getUserSummary } from "../../../api/statistics";
+import { getErrorMessage } from "../../../../data/errorMessages";
 const page = () => {
   const [recent2Weeks, setRecent2Weeks] = useState([]);
   const [ordersByMonth, setOrdersByMonth] = useState([]);
@@ -26,7 +27,7 @@ const page = () => {
         setTopCustomers(response.data.topCustomers);
       }
     } catch (error) {
-      console.log("Error get order stats");
+      getErrorMessage(error.errorCode) || "Lỗi lấy thống kê khách hàng";
     }
   };
   useEffect(() => {

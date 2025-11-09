@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { FaCheck } from "react-icons/fa";
 import { approveStore, getAllStoreRequest } from "../../../api/store";
 import { useRouter } from "next/navigation";
-
+import { getErrorMessage } from "../../../../data/errorMessages";
 const Page = () => {
   const router = useRouter();
   const [stores, setStores] = useState([]);
@@ -33,7 +33,6 @@ const Page = () => {
       cancelButtonText: "Hủy",
     });
 
-    // Nếu người dùng nhấn "Có, phê duyệt!"
     if (result.isConfirmed) {
       try {
         const res = await approveStore(storeId);
@@ -47,11 +46,10 @@ const Page = () => {
           });
           fetchStores();
         }
-
-        // Hiển thị thông báo SweetAlert thành công
       } catch (error) {
-        toast.error("Phê duyệt cửa hàng thất bại!");
-        console.error("Error approving store:", error);
+        toast.error(
+          getErrorMessage(error.errorCode) || "Phê duyệt cửa hàng thất bại!"
+        );
       }
     }
   };
@@ -64,8 +62,9 @@ const Page = () => {
         setTotalStores(response.meta.totalStores);
       }
     } catch (error) {
-      console.error("Error fetch data stores:", error);
-      toast.error("Không thể tải danh sách cửa hàng!");
+      toast.error(
+        getErrorMessage(error.errorCode) || "Không thể tải danh sách cửa hàng!"
+      );
     }
   };
   const [showDetailPopup, setDetailPopup] = useState(false);

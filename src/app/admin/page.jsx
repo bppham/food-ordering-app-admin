@@ -14,6 +14,7 @@ import { getRoleNames } from "../../../data/roleLabel";
 import { FaLock, FaUnlock, FaEdit, FaTrash } from "react-icons/fa";
 import AddAdmin from "../../components/Admin/AddAdmin";
 import EditAdmin from "../../components/Admin/EditAdmin";
+import { getErrorMessage } from "../../../data/errorMessages";
 
 const Page = () => {
   const [admins, setAdmins] = useState([]);
@@ -68,7 +69,7 @@ const Page = () => {
       }
     } catch (err) {
       console.error(err);
-      toast.error("Lỗi khi tạo nhân viên");
+      toast.error(getErrorMessage(err.errorCode) || "Lỗi khi tạo nhân viên");
     }
   };
 
@@ -87,7 +88,7 @@ const Page = () => {
       }
     } catch (err) {
       console.error(err);
-      toast.error("Lỗi khi cập nhật nhân viên");
+      toast.error(getErrorMessage(err.errorCode) || "Lỗi khi tạo nhân viên");
     }
   };
   // ✅ Xóa nhân viên
@@ -114,7 +115,11 @@ const Page = () => {
           Swal.fire("Lỗi!", res.message || "Xóa nhân viên thất bại", "error");
         }
       } catch (err) {
-        Swal.fire("Lỗi!", err.message || "Xóa nhân viên thất bại", "error");
+        Swal.fire(
+          "Lỗi!",
+          getErrorMessage(err.errorCode) || "Xóa nhân viên thất bại",
+          "error"
+        );
       }
     }
   };
@@ -152,7 +157,7 @@ const Page = () => {
       } catch (err) {
         Swal.fire(
           "Lỗi!",
-          err.message || "Thay đổi trạng thái thất bại",
+          getErrorMessage(err.errorCode) || "Thay đổi trạng thái thất bại",
           "error"
         );
       }

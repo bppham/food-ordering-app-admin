@@ -8,7 +8,7 @@ import {
   deleteSystemCategory,
 } from "../../api/systemCategory";
 import { FaEdit, FaTrash } from "react-icons/fa";
-
+import { getErrorMessage } from "../../../data/errorMessages";
 import AddSystemCategoryPopup from "../../components/SystemCategory/AddSystemCategoryPopup";
 import UpdateSystemCategoryPopup from "../../components/SystemCategory/UpdateSystemCategoryPopup";
 
@@ -34,7 +34,9 @@ const Page = () => {
       const res = await getSystemCategories();
       setSystemCategories(res.data);
     } catch (error) {
-      console.error("Lỗi khi lấy danh sách danh mục:", error);
+      toast.error(
+        getErrorMessage(error.errorCode) || "Lỗi khi lấy danh sách danh mục"
+      );
     }
   };
 
@@ -47,8 +49,6 @@ const Page = () => {
         systemCategory.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-
-    // Sort
     if (sortOrder === "id-asc") {
       updatedList.sort((a, b) => a._id.localeCompare(b._id));
     } else if (sortOrder === "id-desc") {
@@ -58,7 +58,6 @@ const Page = () => {
     } else if (sortOrder === "name-desc") {
       updatedList.sort((a, b) => b.name.localeCompare(a.name));
     }
-
     setFilteredSystemCategories(updatedList);
     setCurrentPage(1);
   };
@@ -107,8 +106,7 @@ const Page = () => {
 
       setSystemCategories((prev) => prev.filter((item) => item._id !== id)); // Cập nhật UI ngay lập tức
     } catch (error) {
-      console.error("Lỗi khi xóa danh mục:", error);
-      toast.error(error.data.errorMessage || "Lỗi xóa danh mục");
+      toast.error(getErrorMessage(error.errorCode) || "Lỗi xóa danh mục");
     } finally {
     }
   };

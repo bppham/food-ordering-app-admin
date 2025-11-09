@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import { FaLock, FaUnlock, FaEdit, FaTrash } from "react-icons/fa";
 import { getAllShippers, toggleStatusShipper } from "../../../api/shipper";
-
+import { getErrorMessage } from "../../../../data/errorMessages";
 const Page = () => {
   const [shippers, setShippers] = useState([]);
 
@@ -29,10 +29,12 @@ const Page = () => {
         setShippers(res.data);
         setTotalPages(res.meta?.totalPages || 1);
       } else {
-        console.error("Lỗi khi lấy shipper:", res.message);
+        toast.error("Lỗi khi lấy shipper:", res.message);
       }
     } catch (error) {
-      console.error("Lỗi khi gọi API shipper:", error);
+      toast.error(
+        getErrorMessage(error.errorCode) || "Lỗi khi gọi API shipper"
+      );
     }
   };
 
@@ -73,7 +75,7 @@ const Page = () => {
       } catch (err) {
         Swal.fire(
           "Lỗi!",
-          err.message || "Thay đổi trạng thái thất bại",
+          getErrorMessage(err.errorCode) || "Thay đổi trạng thái thất bại",
           "error"
         );
       }

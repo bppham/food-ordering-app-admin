@@ -8,7 +8,7 @@ import animLogin from "../../../../public/assets/anim/business-analysis.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import ClipLoader from "react-spinners/ClipLoader";
-
+import { getErrorMessage } from "../../../../data/errorMessages";
 import Swal from "sweetalert2";
 
 import { login } from "../../../api/auth";
@@ -36,24 +36,10 @@ const Page = () => {
 
       setTimeout(() => router.push("/home"), 1000);
     } catch (err) {
-      console.log(err);
-      let messageErr = "";
-      if (err.data.errorCode === "ACCOUNT_BLOCKED") {
-        messageErr = "Tài khoản của bạn đã bị khóa";
-      } else if (err.data.errorCode === "INVALID_CREDENTIALS") {
-        messageErr = "Email hoặc mật khẩu không chính xác";
-      } else if (err.status === 400) {
-        messageErr = "Yêu cầu không hợp lệ!";
-      } else if (err.status === 500) {
-        messageErr = "Lỗi server, vui lòng thử lại!";
-      } else {
-        messageErr = err.message;
-      }
-
       Swal.fire({
         icon: "error",
         title: "Đăng nhập thất bại!",
-        text: messageErr,
+        text: getErrorMessage(err.errorCode),
       });
     } finally {
       setIsLoading(false);

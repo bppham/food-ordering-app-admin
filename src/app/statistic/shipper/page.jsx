@@ -12,6 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { getShipperSummary } from "../../../api/statistics";
+import { getErrorMessage } from "../../../../data/errorMessages";
 
 const DashboardShippers = () => {
   const [totalShippers, setTotalShippers] = useState(0);
@@ -28,7 +29,9 @@ const DashboardShippers = () => {
         setShippersByMonth(data.shippersByMonth);
       }
     } catch (error) {
-      console.log("Error fetching shipper summary", error);
+      toast.error(
+        getErrorMessage(error.errorCode) || "Lỗi lấy thống kê shipper"
+      );
     }
   };
 

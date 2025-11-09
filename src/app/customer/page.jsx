@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 import { FaLock, FaUnlock, FaEdit, FaTrash } from "react-icons/fa";
 import { getAllCustomer, toggleStatusCustomer } from "../../api/customer";
-
+import { getErrorMessage } from "../../../data/errorMessages";
 const Page = () => {
   const [users, setUsers] = useState([]);
 
@@ -29,10 +29,12 @@ const Page = () => {
         setUsers(res.data);
         setTotalPages(res.meta?.totalPages || 1);
       } else {
-        console.error("Lỗi khi lấy khách hàng:", res.message);
+        toast.error("Lỗi khi lấy khách hàng:", res.message);
       }
     } catch (error) {
-      console.error("Lỗi khi gọi API khách hàng:", error);
+      toast.error(
+        getErrorMessage(error.errorCode) || "Lỗi khi gọi API khách hàng"
+      );
     }
   };
 
@@ -73,7 +75,7 @@ const Page = () => {
       } catch (err) {
         Swal.fire(
           "Lỗi!",
-          err.message || "Thay đổi trạng thái thất bại",
+          getErrorMessage(err.errorCode) || "Thay đổi trạng thái thất bại",
           "error"
         );
       }

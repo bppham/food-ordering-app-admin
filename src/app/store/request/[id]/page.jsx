@@ -7,6 +7,7 @@ import ModalImage from "react-modal-image";
 import { FaCheck } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { getErrorMessage } from "../../../../../data/errorMessages";
 const Page = () => {
   const router = useRouter();
   const { id } = useParams();
@@ -23,8 +24,9 @@ const Page = () => {
           toast.error("Lỗi khi lấy thông tin cửa hàng: " + res.message);
         }
       } catch (error) {
-        console.error("Lỗi API:", error);
-        toast.error("Không thể tải thông tin cửa hàng");
+        toast.error(
+          getErrorMessage(error.errorCode) || "Không thể tải thông tin cửa hàng"
+        );
       }
     };
 
@@ -58,8 +60,6 @@ const Page = () => {
       confirmButtonText: "Có, phê duyệt!",
       cancelButtonText: "Hủy",
     });
-
-    // Nếu người dùng nhấn "Có, phê duyệt!"
     if (result.isConfirmed) {
       try {
         const res = await approveStore(storeId);
@@ -73,11 +73,10 @@ const Page = () => {
           });
           router.push(`/store/request`);
         }
-
-        // Hiển thị thông báo SweetAlert thành công
       } catch (error) {
-        toast.error("Phê duyệt cửa hàng thất bại!");
-        console.error("Error approving store:", error);
+        toast.error(
+          getErrorMessage(error.errorCode) || "Phê duyệt cửa hàng thất bại!"
+        );
       }
     }
   };

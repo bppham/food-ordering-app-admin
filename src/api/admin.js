@@ -8,7 +8,7 @@ export const getAllAdmins = async (query = {}) => {
     });
     return res.data;
   } catch (err) {
-    throw err.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -17,7 +17,7 @@ export const createAdmin = async (data) => {
     const res = await authApi.post("/admin", data);
     return res.data;
   } catch (err) {
-    throw err.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -26,7 +26,7 @@ export const updateAdmin = async (adminId, data) => {
     const res = await authApi.put(`/admin/${adminId}`, data);
     return res.data;
   } catch (err) {
-    throw err.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -35,7 +35,7 @@ export const getAdminDetail = async (adminId) => {
     const res = await publicApi.get(`/admin/${adminId}`);
     return res.data;
   } catch (err) {
-    throw err.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -44,7 +44,7 @@ export const deleteAdmin = async (adminId) => {
     const res = await authApi.delete(`/admin/${adminId}`);
     return res.data;
   } catch (err) {
-    throw err.response;
+    throw err.response.data || err.response;
   }
 };
 
@@ -53,6 +53,6 @@ export const toggleStatusAdmin = async (adminId) => {
     const res = await authApi.put(`/admin/${adminId}/toggle-status`);
     return res.data;
   } catch (err) {
-    throw err.response;
+    throw err.response.data || err.response;
   }
 };
