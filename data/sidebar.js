@@ -85,7 +85,7 @@ const sidebarData = [
     title: "Thống kê",
     items: [
       {
-        label: "Thống kê khách hàng",
+        label: "Thống kê Khách hàng",
         href: "/statistic/user",
         icon: "/assets/admin-icons/chart.png",
         roles: ["SUPER_ADMIN", "CHIEF_MANAGER"],
@@ -97,7 +97,7 @@ const sidebarData = [
         roles: ["SUPER_ADMIN", "CHIEF_MANAGER"],
       },
       {
-        label: "Thống kế shipper",
+        label: "Thống kế Shipper",
         href: "/statistic/shipper",
         icon: "/assets/admin-icons/monitor.png",
         roles: ["SUPER_ADMIN", "CHIEF_MANAGER"],
