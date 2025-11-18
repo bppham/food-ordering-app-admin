@@ -22,7 +22,6 @@ authApi.interceptors.request.use(
 );
 
 // refresh token
-
 authApi.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -31,7 +30,7 @@ authApi.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const newAccessToken = await axios.get(
-          "http://localhost:5000/api/v1/auth/refresh/admin",
+          `${process.env.NEXT_PUBLIC_SERVER_URI}/auth/refresh/admin`,
           { withCredentials: true }
         );
         // localStorage.setItem("token", newAccessToken.accessToken);

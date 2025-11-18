@@ -119,6 +119,12 @@ const sidebarData = [
         icon: "/assets/admin-icons/shipping-fee.png",
         roles: ["SUPER_ADMIN", "SYSTEM_MANAGER"],
       },
+      {
+        label: "Log viewer",
+        href: "/log-viewer",
+        icon: "/assets/admin-icons/log.png",
+        roles: ["SUPER_ADMIN", "SYSTEM_MANAGER"],
+      },
     ],
   },
 ];
