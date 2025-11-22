@@ -120,9 +120,15 @@ const sidebarData = [
         roles: ["SUPER_ADMIN", "SYSTEM_MANAGER"],
       },
       {
-        label: "Log viewer",
+        label: "Kiểm tra hoạt động",
         href: "/log-viewer",
         icon: "/assets/admin-icons/log.png",
+        roles: ["SUPER_ADMIN", "SYSTEM_MANAGER"],
+      },
+      {
+        label: "Trí tuệ nhân tạo",
+        href: "/ai-management",
+        icon: "/assets/admin-icons/microchip.png",
         roles: ["SUPER_ADMIN", "SYSTEM_MANAGER"],
       },
     ],
