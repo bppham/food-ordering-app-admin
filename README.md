@@ -1,5 +1,3 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 ## The Application – Food Delivery for admintration
 
 This is a web application designed for shippers to manage and deliver food orders efficiently.
@@ -8,10 +6,12 @@ It has some basic function:
 - Authentication: Login, forget password.
 - Dashboard: Overview and basic statistics
 - Request Handling: Approve registration requests from shippers and stores (restaurants)
-- Management: Food types, shippers and stores (restaurants).
+- Management: Food types, shippers and stores (restaurants) and customers.
 - Personal information: update personal details, change password.
-
+- A simple log viewer and UI for retrain the AI model
 ## Getting Started
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 First, run the development server:
 
@@ -25,7 +25,7 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3002](http://localhost:3002) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
@@ -44,7 +44,10 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 You can check out some related repositories below:
 
-- [Server](https://github.com/NND24/food-ordering-server) - Backend server that powers the application
+- [Server](https://github.com/BuiAnh12/graduation_project_backend) - Backend server that powers the application
+- [Client](https://github.com/BuiAnh12/graduation_project_frontend_client) - Customer-facing site for browsing and ordering food.
+- [Admin](https://github.com/bppham/graduation_project_admin_food_app) - Administration dashboard for managing the system.
+- [Store](https://github.com/BuiAnh12/graduation_project_frontend_store) - Store management site for handling menus, orders, staff, and analytics.
 
 ## Feedback & Contributions
 
