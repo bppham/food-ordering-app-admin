@@ -46,8 +46,8 @@ You can check out some related repositories below:
 
 - [Server](https://github.com/BuiAnh12/graduation_project_backend) - Backend server that powers the application
 - [Client](https://github.com/BuiAnh12/graduation_project_frontend_client) - Customer-facing site for browsing and ordering food.
-- [Admin](https://github.com/bppham/graduation_project_admin_food_app) - Administration dashboard for managing the system.
 - [Store](https://github.com/BuiAnh12/graduation_project_frontend_store) - Store management site for handling menus, orders, staff, and analytics.
+- [Shipper (Android)](https://github.com/bppham/graduation_project_shipper_android) - Android application for shippers to receive and deliver orders.
 
 ## Feedback & Contributions
 
